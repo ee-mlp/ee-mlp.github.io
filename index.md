@@ -1,6 +1,6 @@
 ## MLP Dataconsult OÜ
 
-## Kontakt
+### Kontakt
 
 ### Martin Lillepuu
 martin@mlp.ee<br>
@@ -9,16 +9,16 @@ martin@mlp.ee<br>
 ### Piret-Ireen Raidmets
 piret@mlp.ee
 
-## Rekvisiidid
-### E-post
+### Rekvisiidid
+#### E-post
 info@mlp.ee
 
-### Aadress
+#### Aadress
 Pärnu mnt. 410<br>
 Tallinn 10919
 
-### Pangakonto
+#### Pangakonto
 EE097700771002569920 LHV Pank
 
-### KMKR
+#### KMKR
 EE100786334
