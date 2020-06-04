@@ -3,10 +3,14 @@
 ### Kontakt
 
 #### Martin Lillepuu
+IT konsultant
+
 martin@mlp.ee<br>
 +372 515 6450
 
 #### Piret-Ireen Raidmets
+Finantskonsultant
+
 piret@mlp.ee
 
 ### Rekvisiidid
