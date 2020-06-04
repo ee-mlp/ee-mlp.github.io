@@ -2,11 +2,11 @@
 
 ### Kontakt
 
-### Martin Lillepuu
+#### Martin Lillepuu
 martin@mlp.ee<br>
 +372 515 6450
 
-### Piret-Ireen Raidmets
+#### Piret-Ireen Raidmets
 piret@mlp.ee
 
 ### Rekvisiidid
