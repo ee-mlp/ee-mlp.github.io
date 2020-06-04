@@ -4,12 +4,14 @@
 
 ### Martin Lillepuu
 martin@mlp.ee<br>
-+372 5156450
++372 515 6450
 
 ### Piret-Ireen Raidmets
 piret@mlp.ee
 
 ## Rekvisiidid
+### E-post
+info@mlp.ee
 
 ### Aadress
 Pärnu mnt. 410<br>
