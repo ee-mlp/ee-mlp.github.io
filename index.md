@@ -12,9 +12,6 @@ Finantskonsultant<br>
 piret@mlp.ee
 
 ### Rekvisiidid
-**Registri number**<br>
-10893237<br>
-
 **E-post**<br>
 info@mlp.ee
 
@@ -25,6 +22,9 @@ Tallinn 10919
 **Pangakontod**<br>
 EE097700771002569920 LHV Pank<br>
 EE352200221020084047 Swedbank
+
+**Registri number**<br>
+10893237<br>
 
 **KMKR**<br>
 EE100786334
