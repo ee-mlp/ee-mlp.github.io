@@ -16,8 +16,8 @@ piret@mlp.ee
 info@mlp.ee
 
 **Aadress**<br>
-Pärnu mnt. 410<br>
-Tallinn 10919
+Päevalille tee 26<br>
+Muuga aedlinn 74117
 
 **Pangakontod**<br>
 EE097700771002569920 LHV Pank<br>
