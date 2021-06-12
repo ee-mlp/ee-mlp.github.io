@@ -1,4 +1,5 @@
 # Navigare
 
 ### Navigation app using Mapbox iOS SDK
-[Privacy policy](privacy)
+- [Support](mailto:martin@mlp.ee)
+- [Privacy policy](https://www.mapbox.com/legal/privacy)
