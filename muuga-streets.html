@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Muuga tänavad</title>
+    <style>
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+    <script>
+      let map;
+
+      async function fetchWikipediaData(title) {
+	  const apiUrl = `https://et.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+        try {
+          const response = await fetch(apiUrl);
+          if (!response.ok) throw new Error("Not found");
+          const data = await response.json();
+          return {
+            title: data.title,
+            description: data.extract,
+            image: data.thumbnail ? data.thumbnail.source : null,
+            url: data.content_urls.desktop.page
+          };
+        } catch (err) {
+          return {
+            title,
+            description: "No description available.",
+            image: null,
+            url: `https://et.wikipedia.org/wiki/${encodeURIComponent(title)}`
+          };
+        }
+      }
+
+      async function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 59.4733601, lng: 24.932526 },
+          zoom: 15,
+	  mapId: "MUUGA_MAP_ID",
+        });
+
+        const { AdvancedMarkerElement } = google.maps.marker;
+        const infoWindow = new google.maps.InfoWindow();
+
+        try {
+          const response = await fetch('markers.json'); // Adjust path as needed
+          const locations = await response.json();
+
+          for (const loc of locations) {
+            if (!loc.lat || !loc.lng) continue; // skip invalid
+
+            const wiki = await fetchWikipediaData(loc.wikipedia_title);
+
+            const marker = new AdvancedMarkerElement({
+              map,
+              position: { lat: loc.lat, lng: loc.lng },
+              title: wiki.title
+            });
+
+            const content = `
+              <div style="max-width:250px">
+                <h3>${loc.input_address} (${wiki.title})</h3>
+                ${wiki.image ? `<img src="${wiki.image}" style="width:100%;height:auto;border-radius:8px;">` : ""}
+                <p>${wiki.description}</p>
+                <a href="${wiki.url}" target="_blank">Loe edasi Wikipedias</a>
+              </div>
+            `;
+
+            marker.addListener("click", () => {
+              infoWindow.setContent(content);
+              infoWindow.open(map, marker);
+            });
+          }
+
+        } catch (error) {
+          console.error("Error loading data:", error);
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&libraries=marker&callback=initMap"
+      async
+      defer
+    ></script>
+  </body>
+</html>
