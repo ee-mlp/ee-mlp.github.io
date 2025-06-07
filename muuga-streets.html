@@ -2,17 +2,58 @@
 <html>
   <head>
     <title>Muuga tänavad</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #f5f5f5;
+      }
+
       #map {
-        height: 100vh;
+        height: 100%;
         width: 100%;
+      }
+
+      .info-content {
+        max-width: 260px;
+        word-wrap: break-word;
+        line-height: 1.4;
+      }
+
+      .info-content img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      .info-content h3 {
+        margin: 0 0 6px;
+        font-size: 1.1em;
+      }
+
+      .info-content a {
+        display: inline-block;
+        margin-top: 8px;
+        color: #3367d6;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .info-content a:hover {
+        text-decoration: underline;
       }
     </style>
     <script>
       let map;
 
       async function fetchWikipediaData(title) {
-	  const apiUrl = `https://et.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+    const apiUrl = `https://et.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
         try {
           const response = await fetch(apiUrl);
           if (!response.ok) throw new Error("Not found");
@@ -37,7 +78,8 @@
         map = new google.maps.Map(document.getElementById("map"), {
           center: { lat: 59.4733601, lng: 24.932526 },
           zoom: 15,
-	  mapId: "MUUGA_MAP_ID",
+          mapId: "MUUGA_MAP_ID",
+          gestureHandling: "greedy", // allows better mobile interaction
         });
 
         const { AdvancedMarkerElement } = google.maps.marker;
@@ -59,7 +101,7 @@
             });
 
             const content = `
-              <div style="max-width:250px">
+              <div class="info-content">
                 <h3>${loc.input_address} (${wiki.title})</h3>
                 ${wiki.image ? `<img src="${wiki.image}" style="width:100%;height:auto;border-radius:8px;">` : ""}
                 <p>${wiki.description}</p>
