@@ -48,12 +48,40 @@
       .info-content a:hover {
         text-decoration: underline;
       }
+      
+      #locate-btn {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        z-index: 5;
+        background-color: #fff;
+        border: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+      
+      #locate-btn:hover {
+        background-color: #f1f1f1;
+      }
+      
+      #locate-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: #444;
+      }
     </style>
     <script>
       let map;
 
       async function fetchWikipediaData(title) {
-    const apiUrl = `https://et.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+      const apiUrl = `https://et.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
         try {
           const response = await fetch(apiUrl);
           if (!response.ok) throw new Error("Not found");
@@ -118,11 +146,52 @@
         } catch (error) {
           console.error("Error loading data:", error);
         }
+    }
+    
+    document.getElementById("locate-btn").addEventListener("click", () => {
+      if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser.");
+        return;
       }
-
+    
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userPos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+    
+          map.setCenter(userPos);
+          map.setZoom(15);
+    
+          new google.maps.Marker({
+            position: userPos,
+            map,
+            title: "Oled siin",
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 6,
+              fillColor: "#4285F4",
+              fillOpacity: 1,
+              strokeWeight: 2,
+              strokeColor: "white",
+            },
+          });
+        },
+        () => {
+          alert("Unable to retrieve your location.");
+        }
+      );
+    });
+          
     </script>
   </head>
   <body>
+    <button id="locate-btn" title="Minu asukoht">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 8a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm9 3h-2.07a7.003 7.003 0 0 0-5.93-5.93V3h-2v2.07a7.003 7.003 0 0 0-5.93 5.93H3v2h2.07a7.003 7.003 0 0 0 5.93 5.93V21h2v-2.07a7.003 7.003 0 0 0 5.93-5.93H21v-2z"/>
+      </svg>
+    </button>
     <div id="map"></div>
 
     <script
