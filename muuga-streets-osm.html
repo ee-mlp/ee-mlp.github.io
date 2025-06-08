@@ -104,7 +104,7 @@
         (pos) => {
           const { latitude, longitude } = pos.coords;
           const userLatLng = [latitude, longitude];
-          map.setView(userLatLng, 13);
+          map.setView(userLatLng, 17);
           const marker = L.marker(userLatLng).addTo(map)
             .bindPopup("You are here")
             .openPopup();
