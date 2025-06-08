@@ -137,7 +137,7 @@
     "formatted_address": "Kitsekakra tee, Maardu, 74117 Harju maakond, Estonia",
     "lat": 59.4769375,
     "lng": 24.9431354,
-    "wikipedia_title": "Kitsekakar"
+    "wikipedia_title": "Kaukaasia kitsekakar"
   },
   {
     "input_address": "Kreegipuu puiestee",
@@ -455,13 +455,6 @@
     "wikipedia_title": "Sõlmhein"
   },
   {
-    "input_address": "Sooheina tee",
-    "formatted_address": "Sooheina tee, Maardu, 74117 Harju maakond, Estonia",
-    "lat": 59.475618,
-    "lng": 24.9216104,
-    "wikipedia_title": "Soohein"
-  },
-  {
     "input_address": "Sookailu tee",
     "formatted_address": "Sookailu tee, Maardu, 74117 Harju maakond, Estonia",
     "lat": 59.4831446,
@@ -501,14 +494,14 @@
     "formatted_address": "Tähtpea põik, Maardu, 74117 Harju maakond, Estonia",
     "lat": 59.4770794,
     "lng": 24.9237926,
-    "wikipedia_title": "Tui-Tähtpea"
+    "wikipedia_title": "Tui-tähtpea"
   },
   {
     "input_address": "Tähtpea tee",
     "formatted_address": "Tähtpea tee, Maardu, 74117 Harju maakond, Estonia",
     "lat": 59.4773776,
     "lng": 24.9227813,
-    "wikipedia_title": "Tui-Tähtpea"
+    "wikipedia_title": "Tui-tähtpea"
   },
   {
     "input_address": "Tihasheina tee",
