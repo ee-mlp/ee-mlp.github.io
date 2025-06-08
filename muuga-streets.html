@@ -120,6 +120,7 @@
         });
 
         const { AdvancedMarkerElement } = google.maps.marker;
+        const { PinElement } = google.maps.marker;
         const infoWindow = new google.maps.InfoWindow();
 /*
         // Try to center on user location
@@ -161,10 +162,17 @@
 
             const wiki = await fetchWikipediaData(loc.wikipedia_title);
 
+            const greenPin = new PinElement({
+              background: "#228822", // Google's green color or any hex color
+              glyphColor: "white",   // Optional: color of the icon/letter on the pin
+              borderColor: "#ffffff",
+            });
+
             const marker = new AdvancedMarkerElement({
               map,
               position: { lat: loc.lat, lng: loc.lng },
-              title: wiki.title
+              title: wiki.title,
+              content: greenPin.element,
             });
 
             const content = `
