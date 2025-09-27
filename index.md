@@ -7,7 +7,7 @@ IT konsultant<br>
 martin@mlp.ee<br>
 +372 515 6450
 
-**Piret-Ireen Raidmets**<br>
+**Piret-Ireen Lillepuu**<br>
 Finantskonsultant<br>
 piret@mlp.ee
 
