@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Tallinn Parking Nearby v0.3.1</title>
+<title>Tallinn Parking Nearby v0.3.2</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 html, body { height: 100%; margin: 0; padding: 0; font-family: Arial, sans-serif; }
@@ -67,17 +67,19 @@ async function preloadData() {
       price: z.price_list ? z.price_list.map(p=>`${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}`).join(", ") : "",
       lat: parseFloat(z.latitude),
       lng: parseFloat(z.longitude),
-      source: "EuroPark"
+      source: "EuroPark",
+      polygons: z.geojson?.features?.filter(f=>f.geometry.type==="Polygon").map(f=>({path: f.geometry.coordinates[0].map(c=>({lat:c[1], lng:c[0]}))})) || []
     });
   });
 
   snabb.forEach(z=>{
     markersData.push({
       title: z.Name,
-      price: `Iga alustatud 30 minutit: ${z.HalfHourPrice} ${z.Currency}, 24h: ${z.Price24h} ${z.Currency}`,
+      price: `Half hour: ${z.HalfHourPrice} ${z.Currency}, 24h: ${z.Price24h} ${z.Currency}`,
       lat: z.Latitude,
       lng: z.Longitude,
-      source: "Snabb"
+      source: "Snabb",
+      polygons: z.Polygons || []
     });
   });
 
@@ -90,7 +92,8 @@ async function preloadData() {
       price: priceText,
       lat: z.lat,
       lng: z.lng,
-      source: "Yhisteenused"
+      source: "Yhisteenused",
+      polygons: z.areas ? z.areas.map(a=>({path:a.points.map(p=>({lat:p.lat,lng:p.lng}))})) : []
     });
   });
 }
@@ -112,7 +115,7 @@ function updateNearby() {
   const tbody = document.querySelector("#markers-table tbody");
   tbody.innerHTML = "";
 
-  // Clear previous markers
+  // Clear previous markers/polygons
   markerObjects.forEach(m=>m.setMap(null));
   markerObjects = [];
 
@@ -120,13 +123,11 @@ function updateNearby() {
     m.distance = haversine(userLocation.lat(), userLocation.lng(), m.lat, m.lng);
   });
 
-  // Filter within 1000 m
   const nearby = markersData.filter(m=>m.distance <= 1000).sort((a,b)=>a.distance-b.distance);
 
-  nearby.forEach((m,index)=>{
+  nearby.forEach(m=>{
     const tr = document.createElement("tr");
 
-    // Clickable title for Google Maps navigation
     const titleCell = document.createElement("td");
     const link = document.createElement("a");
     link.textContent = m.title;
@@ -148,7 +149,6 @@ function updateNearby() {
     tr.appendChild(distanceCell);
     tr.appendChild(sourceCell);
 
-    // Table row click: pan & info window
     tr.addEventListener("click", ()=>{
       map.panTo({lat: m.lat, lng: m.lng});
       map.setZoom(17);
@@ -159,25 +159,48 @@ function updateNearby() {
 
     tbody.appendChild(tr);
 
-    // Add marker on map
+    // Marker with white P
     const color = m.source === "EuroPark" ? "black" : m.source === "Snabb" ? "yellow" : "blue";
+    const svgMarker = {
+      path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z",
+      fillColor: color,
+      fillOpacity: 1,
+      strokeWeight: 0,
+      scale: 1.5,
+      anchor: new google.maps.Point(12,24),
+      labelOrigin: new google.maps.Point(12,10)
+    };
+
     const marker = new google.maps.Marker({
       position: {lat: m.lat, lng: m.lng},
       map,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillColor: color,
-        fillOpacity: 0.8,
-        strokeWeight: 1,
-        strokeColor: "white"
-      }
+      icon: svgMarker,
+      label: { text:"P", color:"white", fontSize:"12px", fontWeight:"bold" }
     });
+
     marker.addListener("click", ()=>{
       infoWindow.setContent(`<b>${m.title}</b><br>${m.price}<br><i>${m.source}</i>`);
       infoWindow.open(map, marker);
     });
+
     markerObjects.push(marker);
+
+    // Draw polygons
+    if(m.polygons && Array.isArray(m.polygons)){
+      m.polygons.forEach(poly=>{
+        const path = poly.path.map(p=>({lat: p.latitude || p.lat, lng: p.longitude || p.lng}));
+        const polygon = new google.maps.Polygon({
+          paths: path,
+          strokeColor: color,
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: color,
+          fillOpacity: 0.2,
+          map: map
+        });
+        markerObjects.push(polygon);
+      });
+    }
   });
 }
 
@@ -207,7 +230,7 @@ async function initMap() {
     updateNearby();
   });
 
-  // Default location via geolocation
+  // Default location
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(pos=>{
       userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
@@ -215,19 +238,11 @@ async function initMap() {
       map.setZoom(16);
       updateNearby();
 
-      // Show marker for user location
       new google.maps.Marker({
         position: userLocation,
         map,
         title: "You are here",
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 8,
-          fillColor: "red",
-          fillOpacity: 1,
-          strokeColor: "white",
-          strokeWeight: 2
-        }
+        icon: { path: google.maps.SymbolPath.CIRCLE, scale: 8, fillColor: "red", fillOpacity:1, strokeColor:"white", strokeWeight:2 }
       });
     }, ()=>{
       userLocation = map.getCenter();
