@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tallinn Parking Nearby v0.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html, body { height: 100%; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+#map { height: 50%; width: 100%; }
+#search-container { padding: 10px; text-align: center; }
+#search-box { width: 90%; max-width: 400px; padding: 8px; font-size: 16px; border-radius: 4px; border: 1px solid #ccc; }
+#table-container { height: 50%; overflow-y: auto; padding: 10px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 6px; border-bottom: 1px solid #ccc; text-align: left; }
+th { background: #f0f0f0; }
+</style>
+</head>
+<body>
+
+<div id="search-container">
+  <input id="search-box" type="text" placeholder="Search address...">
+</div>
+
+<div id="map"></div>
+
+<div id="table-container">
+  <table id="markers-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Distance (m)</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+let map;
+let infoWindow;
+let markersData = []; // Will hold all preloaded markers
+let userLocation = null;
+
+// Preload EuroPark + Snabb Detail + Yhisteenused data
+async function preloadData() {
+  const euro = await fetch("https://mlp.ee/parking/europark.json").then(r=>r.json()).catch(()=>({paringzones:[]}));
+  const euroParkData = euro.paringzones||[];
+
+  const snabb = await fetch("https://mlp.ee/parking/snabb_detail.json").then(r=>r.json()).catch(()=>[]);
+  const snabbData = snabb||[];
+
+  const yh = await fetch("https://mlp.ee/parking/yhisteenused.json").then(r=>r.json()).catch(()=>({items:[]})).then(d=>d.items||[]);
+  const yhDetail = await fetch("https://mlp.ee/parking/yhisteenused_detail.json").then(r=>r.json()).catch(()=>[]);
+
+  const yhDetailMap = new Map();
+  yhDetail.forEach(d=>yhDetailMap.set(String(d.id), d));
+
+  // Combine into unified array
+  markersData = [];
+
+  euroParkData.forEach(z=>{
+    markersData.push({
+      title: z.name,
+      price: z.price_list ? z.price_list.map(p=>`${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}`).join(", ") : "",
+      lat: parseFloat(z.latitude),
+      lng: parseFloat(z.longitude)
+    });
+  });
+
+  snabbData.forEach(z=>{
+    markersData.push({
+      title: z.Name,
+      price: `Half hour: ${z.HalfHourPrice} ${z.Currency}, 24h: ${z.Price24h} ${z.Currency}`,
+      lat: z.Latitude,
+      lng: z.Longitude
+    });
+  });
+
+  yh.forEach(z=>{
+    const detail = yhDetailMap.get(String(z.id));
+    let priceText = "";
+    if(detail && detail.prices) priceText = detail.prices.map(p=>`${p.duration}: ${p.price}`).join(", ");
+    markersData.push({
+      title: z.title,
+      price: priceText,
+      lat: z.lat,
+      lng: z.lng
+    });
+  });
+}
+
+// Initialize the map
+async function initMap() {
+  await preloadData();
+
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: {lat: 59.437, lng: 24.753},
+    zoom: 13
+  });
+
+  infoWindow = new google.maps.InfoWindow();
+
+  // Address search
+  const input = document.getElementById("search-box");
+  const searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+
+  searchBox.addListener("places_changed", () => {
+    const places = searchBox.getPlaces();
+    if(!places || !places.length) return;
+    const p = places[0];
+    if(!p.geometry) return;
+    userLocation = p.geometry.location;
+    map.panTo(userLocation);
+    map.setZoom(16);
+    updateNearbyTable();
+  });
+
+  // Click map to set location manually
+  map.addListener("click", (e) => {
+    userLocation = e.latLng;
+    updateNearbyTable();
+  });
+
+  // Initial table (center of map)
+  userLocation = map.getCenter();
+  updateNearbyTable();
+}
+
+// Calculate distance between two lat/lng points in meters
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371000;
+  const toRad = x => x*Math.PI/180;
+  const dLat = toRad(lat2-lat1);
+  const dLng = toRad(lng2-lng1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)**2;
+  const c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R*c;
+}
+
+// Update table with markers sorted by distance
+function updateNearbyTable() {
+  if(!userLocation) return;
+  const tbody = document.querySelector("#markers-table tbody");
+  tbody.innerHTML = "";
+
+  markersData.forEach(m=>{
+    m.distance = haversine(userLocation.lat(), userLocation.lng(), m.lat, m.lng);
+  });
+
+  const sorted = markersData.sort((a,b)=>a.distance-b.distance);
+
+  sorted.forEach(m=>{
+    const tr = document.createElement("tr");
+    const tdTitle = document.createElement("td");
+    tdTitle.textContent = m.title;
+    const tdPrice = document.createElement("td");
+    tdPrice.textContent = m.price;
+    const tdDist = document.createElement("td");
+    tdDist.textContent = Math.round(m.distance);
+    tr.append(tdTitle, tdPrice, tdDist);
+    tbody.appendChild(tr);
+  });
+}
+</script>
+
+<script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&v=weekly&libraries=places&callback=initMap">
+</script>
+</body>
+</html>
