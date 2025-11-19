@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Tallinn Parking v0.2.5</title>
+<title>Tallinn Parking v0.2.6</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   html, body { height: 100%; margin: 0; padding: 0; }
@@ -26,7 +26,7 @@
   <label><input type="checkbox" id="europarkToggle" checked> EuroPark</label><br>
   <label><input type="checkbox" id="snabbToggle" checked> Snabb</label><br>
   <label><input type="checkbox" id="yhisteenusedToggle" checked> Yhisteenused</label>
-  <div class="version">Version: v0.2.5</div>
+  <div class="version">Version: v0.2.6</div>
 </div>
 
 <div id="map"></div>
@@ -35,29 +35,28 @@
 let map;
 let globalClusterer;
 let infoWindow;
-const APP_VERSION = "v0.2.5";
+const APP_VERSION = "v0.2.6";
 
-// Layer container
 const layers = {
   europark: { markers: [], polygons: [], visible: true },
   snabb: { markers: [], polygons: [], visible: true },
   yhisteenused: { markers: [], polygons: [], visible: true }
 };
 
+// Detail caches
 let snabbDetailMap = {};
 let yhisteenusedDetailMap = {};
 
 // Marker creation
 function createParkingMarker(lat, lng, layerName, labelText = "P") {
   const colorMap = {
-    europark: "#000000",       // black
-    snabb: "#FFD700",           // yellow
-    yhisteenused: "#1E90FF"    // blue
+    europark: "#000000",
+    snabb: "#FFD700",
+    yhisteenused: "#1E90FF"
   };
-
   const div = document.createElement("div");
   div.style.background = colorMap[layerName] || "#000";
-  div.style.color = layerName === "snabb" ? "#000" : "#fff"; // contrast
+  div.style.color = layerName === "snabb" ? "#000" : "#fff";
   div.style.fontWeight = "bold";
   div.style.fontSize = "18px";
   div.style.width = "40px";
@@ -88,6 +87,25 @@ function setLayerVisible(layerName, visible) {
   layers[layerName].markers.forEach(m => m.map = visible ? map : null);
   layers[layerName].polygons.forEach(p => p.setMap(visible ? map : null));
   if (globalClusterer) globalClusterer.repaint();
+}
+
+// Lazy fetch detail
+async function getSnabbDetail(id) {
+  if (Object.keys(snabbDetailMap).length === 0) {
+    const res = await fetch("https://mlp.ee/parking/snabb_detail.json");
+    const detailData = await res.json();
+    detailData.forEach(d => { snabbDetailMap[d.ID] = d; });
+  }
+  return snabbDetailMap[id];
+}
+
+async function getYhisteenusedDetail(id) {
+  if (Object.keys(yhisteenusedDetailMap).length === 0) {
+    const res = await fetch("https://mlp.ee/parking/yhisteenused_detail.json");
+    const detailData = await res.json();
+    detailData.forEach(d => { yhisteenusedDetailMap[d.id] = d; });
+  }
+  return yhisteenusedDetailMap[id];
 }
 
 // Initialize map
@@ -144,22 +162,18 @@ async function loadEuroPark() {
   } catch(e) { console.error("Failed to load EuroPark", e); }
 }
 
-// Load Snabb
+// Load Snabb (markers only, detail lazy)
 async function loadSnabb() {
   try {
     const res = await fetch("https://mlp.ee/parking/snabb.json");
     const data = await res.json();
-    const detailRes = await fetch("https://mlp.ee/parking/snabb_detail.json");
-    const detailData = await detailRes.json();
-
-    detailData.forEach(d => { snabbDetailMap[d.ID] = d; });
 
     data.forEach(zone => {
       const marker = createParkingMarker(zone.Latitude, zone.Longitude, "snabb");
       addMarkerToLayer("snabb", marker);
 
-      marker.addListener("click", () => {
-        const detail = snabbDetailMap[zone.ID];
+      marker.addListener("click", async () => {
+        const detail = await getSnabbDetail(zone.ID);
         if (detail) {
           let html = `<b>${zone.Name}</b><br>${zone.AddressText}<br>`;
           html += `<b>Half hour:</b> ${detail.HalfHourPrice} ${detail.Currency}<br>`;
@@ -177,22 +191,18 @@ async function loadSnabb() {
   } catch(e) { console.error("Failed to load Snabb", e); }
 }
 
-// Load Yhisteenused
+// Load Yhisteenused (markers only, detail lazy)
 async function loadYhisteenused() {
   try {
     const res = await fetch("https://mlp.ee/parking/yhisteenused.json");
     const data = await res.json();
-    const detailRes = await fetch("https://mlp.ee/parking/yhisteenused_detail.json");
-    const detailData = await detailRes.json();
-
-    detailData.forEach(d => { yhisteenusedDetailMap[d.id] = d; });
 
     data.items.forEach(zone => {
       const marker = createParkingMarker(zone.lat, zone.lng, "yhisteenused");
       addMarkerToLayer("yhisteenused", marker);
 
-      marker.addListener("click", () => {
-        const detail = yhisteenusedDetailMap[zone.id];
+      marker.addListener("click", async () => {
+        const detail = await getYhisteenusedDetail(zone.id);
         if (detail) {
           let html = `<b>${zone.title}</b><br>${zone.address}<br>`;
           if (detail.prices) {
