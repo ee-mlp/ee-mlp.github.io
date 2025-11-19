@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Tallinn Parking Map v0.1</title>
+<title>Tallinn Parking Map v0.2</title>
 <style>
   #map { height: 100vh; width: 100%; }
   #layers-control {
@@ -77,12 +77,22 @@ async function fetchCached(url, key) {
 
 // -------------------- Marker & Polygon helpers --------------------
 function createMarker(map, position, title, infoContent) {
+  // Create a DOM element for AdvancedMarkerElement
+  const el = document.createElement("div");
+  el.style.background = "white";
+  el.style.padding = "4px";
+  el.style.border = "1px solid #333";
+  el.style.borderRadius = "4px";
+  el.style.whiteSpace = "nowrap";
+  el.innerHTML = `📍 ${title}`;
+
   const marker = new google.maps.marker.AdvancedMarkerElement({
     map,
     position,
     title,
-    content: `<div style="background:white;padding:4px;border:1px solid #333;border-radius:4px;">${title}</div>`
+    content: el
   });
+
   const infoWindow = new google.maps.InfoWindow({ content: infoContent });
   marker.addListener("click", () => infoWindow.open(map));
   return marker;
@@ -206,7 +216,9 @@ function initMap() {
 }
 </script>
 
-<!-- Google Maps API with async/defer -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&v=weekly&libraries=marker&callback=initMap"></script>
+<!-- Google Maps API with marker library -->
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&v=weekly&libraries=marker&callback=initMap">
+</script>
 </body>
 </html>
