@@ -240,6 +240,11 @@ async function initMap(){
     map.setZoom(16);
   });
 
+  // Close infoWindow when clicking on the map
+  map.addListener("click", () => {
+    if (infoWindow) infoWindow.close();
+  });
+
   // Geolocation button
   const geolocateBtn = document.getElementById("geolocate-btn");
   map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocateBtn);
