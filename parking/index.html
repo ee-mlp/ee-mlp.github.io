@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Tallinn Parking Map v0.2.1</title>
+<title>Tallinn Parking Map v0.2.2</title>
 <style>
   #map { height: 100vh; width: 100%; }
   #layers-control {
@@ -50,12 +50,12 @@ class MapLayer {
   setVisible(map, visible) {
     this.items.forEach(item => { if (item.setMap) item.setMap(visible ? map : null); });
     if (this.cluster) {
-      if (visible) this.cluster.addMarkers(this.items.filter(i => i instanceof google.maps.Marker || i instanceof google.maps.marker.AdvancedMarkerElement));
+      if (visible) this.cluster.addMarkers(this.items.filter(i => i instanceof google.maps.marker.AdvancedMarkerElement));
       else this.cluster.clearMarkers();
     }
   }
   enableClustering(map) {
-    const markers = this.items.filter(i => i instanceof google.maps.Marker || i instanceof google.maps.marker.AdvancedMarkerElement);
+    const markers = this.items.filter(i => i instanceof google.maps.marker.AdvancedMarkerElement);
     if(markers.length) {
       this.cluster = new markerClusterer.MarkerClusterer({ map, markers });
     }
