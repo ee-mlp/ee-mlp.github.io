@@ -137,8 +137,15 @@ async function loadEuroPark() {
       const marker = createParkingMarker(parseFloat(zone.latitude), parseFloat(zone.longitude), "europark");
       addMarkerToLayer("europark", marker);
 
-      marker.addListener("click", () => {
-        infoWindow.setContent(`<b>${zone.name}</b><br>${zone.address}`);
+       marker.addListener("click", () => {
+        let html = `<b>${zone.name}</b><br>${zone.address}<br>`;
+        if (zone.price_list && zone.price_list.length > 0) {
+          html += "<b>Prices:</b><br>";
+          zone.price_list.forEach(p => {
+            html += `${p.period_name_long}: ${p.amount_w_vat / 100} ${p.currency}<br>`;
+          });
+        }
+        infoWindow.setContent(html);
         infoWindow.open({ anchor: marker, map });
       });
 
@@ -165,30 +172,45 @@ async function loadEuroPark() {
 // Load Snabb (markers only, detail lazy)
 async function loadSnabb() {
   try {
-    const res = await fetch("https://mlp.ee/parking/snabb.json");
+    const res = await fetch("https://mlp.ee/parking/snabb_detail.json");
     const data = await res.json();
 
     data.forEach(zone => {
       const marker = createParkingMarker(zone.Latitude, zone.Longitude, "snabb");
       addMarkerToLayer("snabb", marker);
 
-      marker.addListener("click", async () => {
-        const detail = await getSnabbDetail(zone.ID);
-        if (detail) {
-          let html = `<b>${zone.Name}</b><br>${zone.AddressText}<br>`;
-          html += `<b>Half hour:</b> ${detail.HalfHourPrice} ${detail.Currency}<br>`;
-          html += `<b>24h:</b> ${detail.Price24h} ${detail.Currency}<br>`;
-          if (detail.MonthlyPasses) {
-            detail.MonthlyPasses.forEach(p => {
-              html += `<b>${p.Name}:</b> ${p.Price} ${detail.Currency}<br>`;
-            });
-          }
-          infoWindow.setContent(html);
-          infoWindow.open({ anchor: marker, map });
+      marker.addListener("click", () => {
+        let html = `<b>${zone.Name}</b><br>${zone.AddressText}<br>`;
+        html += `<b>Half hour:</b> ${zone.HalfHourPrice} ${zone.Currency}<br>`;
+        html += `<b>24h:</b> ${zone.Price24h} ${zone.Currency}<br>`;
+        if (zone.MonthlyPasses) {
+          zone.MonthlyPasses.forEach(p => {
+            html += `<b>${p.Name}:</b> ${p.Price} ${zone.Currency}<br>`;
+          });
         }
+        infoWindow.setContent(html);
+        infoWindow.open({ anchor: marker, map });
       });
+
+      // Optional: polygons
+      if (zone.Polygons) {
+        zone.Polygons.forEach(pg => {
+          const polygon = new google.maps.Polygon({
+            paths: pg.path.map(pt => ({ lat: pt.latitude, lng: pt.longitude })),
+            strokeColor: "#FFD700",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FFD700",
+            fillOpacity: 0.1
+          });
+          polygon.setMap(layers.snabb.visible ? map : null);
+          layers.snabb.polygons.push(polygon);
+        });
+      }
     });
-  } catch(e) { console.error("Failed to load Snabb", e); }
+  } catch(e) {
+    console.error("Failed to load Snabb", e);
+  }
 }
 
 // Load Yhisteenused (markers only, detail lazy)
