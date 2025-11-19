@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tallinn Parking Map</title>
-  <style>
-    #map { height: 100vh; width: 100%; }
-    #layers-control {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: white;
-      padding: 10px;
-      z-index: 5;
-      border-radius: 4px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Tallinn Parking Map</title>
+<style>
+  #map { height: 100vh; width: 100%; }
+  #layers-control {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    padding: 10px;
+    z-index: 5;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+</style>
 </head>
 <body>
+
 <div id="layers-control">
   <label><input type="checkbox" id="europarkLayer" checked> EuroPark</label><br>
   <label><input type="checkbox" id="snabbLayer" checked> Snabb</label><br>
   <label><input type="checkbox" id="yhisteenusedLayer" checked> Yhisteenused</label>
 </div>
 <div id="map"></div>
+
+<!-- MarkerClusterer library -->
+<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 
 <script>
 const DATA_SOURCES = {
@@ -35,12 +39,26 @@ const DATA_SOURCES = {
 };
 const CACHE_TTL = 24 * 60 * 60 * 1000;
 
-// -------------------- MapLayer class --------------------
+// -------------------- MapLayer with clustering --------------------
 class MapLayer {
-  constructor(name) { this.name = name; this.items = []; }
+  constructor(name) {
+    this.name = name;
+    this.items = [];
+    this.cluster = null;
+  }
   add(item) { this.items.push(item); }
   setVisible(map, visible) {
     this.items.forEach(item => { if (item.setMap) item.setMap(visible ? map : null); });
+    if (this.cluster) {
+      if (visible) this.cluster.addMarkers(this.items.filter(i => i instanceof google.maps.Marker || i instanceof google.maps.marker.AdvancedMarkerElement));
+      else this.cluster.clearMarkers();
+    }
+  }
+  enableClustering(map) {
+    const markers = this.items.filter(i => i instanceof google.maps.Marker || i instanceof google.maps.marker.AdvancedMarkerElement);
+    if(markers.length) {
+      this.cluster = new markerClusterer.MarkerClusterer({ map, markers });
+    }
   }
 }
 
@@ -63,7 +81,7 @@ function createMarker(map, position, title, infoContent) {
     map,
     position,
     title,
-    content: `<div style="background:white;padding:4px;border:1px solid #333;border-radius:4px;">${title}</div>`
+    content: `<div style="background:white;padding:4px;border:1px solid #333;border-radius:4px;">📍 ${title}</div>`
   });
   const infoWindow = new google.maps.InfoWindow({ content: infoContent });
   marker.addListener("click", () => infoWindow.open(map));
@@ -82,101 +100,103 @@ function createPolygon(map, pathCoords, color="#FF0000") {
   });
 }
 
-// -------------------- EuroPark price formatting --------------------
+// -------------------- Formatting helpers --------------------
 function formatEuroparkPrice(price_list) {
   if (!price_list || price_list.length === 0) return "No prices";
   return price_list.map(p => `${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}`).join("<br>");
 }
-
-// -------------------- Yhisteenused price formatting --------------------
 function formatYhisteenusedPrice(prices) {
   if (!prices) return "No prices";
   return prices.map(p => `${p.duration}: ${p.price}`).join("<br>");
 }
 
 // -------------------- Init Map --------------------
-async function initMap() {
+function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 59.437, lng: 24.753 },
     zoom: 13
   });
 
-  // === Layers ===
   const euroLayer = new MapLayer("EuroPark");
   const snabbLayer = new MapLayer("Snabb");
   const yhisteenusedLayer = new MapLayer("Yhisteenused");
 
   // --- EURO PARK ---
-  const euroData = await fetchCached(DATA_SOURCES.europark, "europark_cache");
-  euroData?.paringzones?.forEach(zone => {
-    const center = zone.geojson?.features?.find(f => f.properties?.type==="centerpoint");
-    if (center) {
-      const [lng, lat] = center.geometry.coordinates;
-      const content = `<b>${zone.name}</b><br>${zone.address}<br>
-                       Available: ${zone.available_spaces}<br>
-                       <a href="${zone.url}" target="_blank">More info</a><br>
-                       <b>Prices:</b><br>${formatEuroparkPrice(zone.price_list)}`;
-      euroLayer.add(createMarker(map, {lat,lng}, zone.name, content));
-    }
-    zone.geojson?.features?.filter(f => f.properties?.type==="outline").forEach(f => {
-      const coords = f.geometry.coordinates[0].map(c => ({lat:c[1], lng:c[0]}));
-      euroLayer.add(createPolygon(map, coords, "#0000FF"));
+  fetchCached(DATA_SOURCES.europark, "europark_cache").then(euroData => {
+    euroData?.paringzones?.forEach(zone => {
+      const center = zone.geojson?.features?.find(f => f.properties?.type==="centerpoint");
+      if(center) {
+        const [lng, lat] = center.geometry.coordinates;
+        const content = `<b>${zone.name}</b><br>${zone.address}<br>
+          Available: ${zone.available_spaces}<br>
+          <a href="${zone.url}" target="_blank">More info</a><br>
+          <b>Prices:</b><br>${formatEuroparkPrice(zone.price_list)}`;
+        euroLayer.add(createMarker(map, {lat,lng}, zone.name, content));
+      }
+      zone.geojson?.features?.filter(f => f.properties?.type==="outline").forEach(f => {
+        const coords = f.geometry.coordinates[0].map(c => ({lat:c[1], lng:c[0]}));
+        euroLayer.add(createPolygon(map, coords, "#0000FF"));
+      });
     });
+    euroLayer.enableClustering(map);
   });
 
   // --- SNABB ---
-  const snabbData = await fetchCached(DATA_SOURCES.snabb, "snabb_cache");
-  snabbData?.forEach(item => {
-    const lat = parseFloat(item.Latitude);
-    const lng = parseFloat(item.Longitude);
-    if (!lat || !lng) return;
-    const content = `<b>${item.Name}</b><br>${item.AddressText}<br>Zone: ${item.Zone}`;
-    snabbLayer.add(createMarker(map, {lat,lng}, item.Name, content));
-  });
-
-  const snabbDetailData = await fetchCached(DATA_SOURCES.snabb_detail, "snabb_detail_cache");
-  snabbDetailData?.forEach(item => {
-    const lat = parseFloat(item.Latitude);
-    const lng = parseFloat(item.Longitude);
-    if (!lat || !lng) return;
-    const content = `<b>${item.Name}</b><br>${item.AddressText}<br>
-                     Zone: ${item.Zone}<br>
-                     24h price: ${item.Price24h} ${item.Currency}<br>
-                     Half-hour: ${item.HalfHourPrice} ${item.Currency}`;
-    snabbLayer.add(createMarker(map, {lat,lng}, item.Name, content));
-
-    item.Polygons?.forEach(poly => {
-      const pathCoords = poly.path.map(pt => ({lat:pt.latitude,lng:pt.longitude}));
-      snabbLayer.add(createPolygon(map, pathCoords, "#008800"));
+  Promise.all([
+    fetchCached(DATA_SOURCES.snabb, "snabb_cache"),
+    fetchCached(DATA_SOURCES.snabb_detail, "snabb_detail_cache")
+  ]).then(([snabbData, snabbDetailData]) => {
+    snabbData?.forEach(item => {
+      const lat = parseFloat(item.Latitude);
+      const lng = parseFloat(item.Longitude);
+      if(!lat || !lng) return;
+      const content = `<b>${item.Name}</b><br>${item.AddressText}<br>Zone: ${item.Zone}`;
+      snabbLayer.add(createMarker(map, {lat,lng}, item.Name, content));
     });
+    snabbDetailData?.forEach(item => {
+      const lat = parseFloat(item.Latitude);
+      const lng = parseFloat(item.Longitude);
+      if(!lat || !lng) return;
+      const content = `<b>${item.Name}</b><br>${item.AddressText}<br>
+        Zone: ${item.Zone}<br>
+        24h price: ${item.Price24h} ${item.Currency}<br>
+        Half-hour: ${item.HalfHourPrice} ${item.Currency}`;
+      snabbLayer.add(createMarker(map, {lat,lng}, item.Name, content));
+
+      item.Polygons?.forEach(poly => {
+        const pathCoords = poly.path.map(pt => ({lat:pt.latitude,lng:pt.longitude}));
+        snabbLayer.add(createPolygon(map, pathCoords, "#008800"));
+      });
+    });
+    snabbLayer.enableClustering(map);
   });
 
   // --- YHISTEENUSED ---
-  const yhisteenusedData = await fetchCached(DATA_SOURCES.yhisteenused, "yhisteenused_cache");
-  const yhisteenusedDetailData = await fetchCached(DATA_SOURCES.yhisteenused_detail, "yhisteenused_detail_cache");
+  Promise.all([
+    fetchCached(DATA_SOURCES.yhisteenused, "yhisteenused_cache"),
+    fetchCached(DATA_SOURCES.yhisteenused_detail, "yhisteenused_detail_cache")
+  ]).then(([data, detailData]) => {
+    const detailMap = new Map();
+    detailData?.forEach(d => detailMap.set(d.id.toString(), d));
+    data?.items?.forEach(item => {
+      const lat = item.lat;
+      const lng = item.lng;
+      if(!lat || !lng) return;
 
-  const detailMap = new Map();
-  yhisteenusedDetailData?.forEach(d => detailMap.set(d.id.toString(), d));
+      const detail = detailMap.get(item.id.toString());
+      const priceInfo = detail ? formatYhisteenusedPrice(detail.prices) : "No prices";
 
-  yhisteenusedData?.items?.forEach(item => {
-    const lat = item.lat;
-    const lng = item.lng;
-    if (!lat || !lng) return;
+      const content = `<b>${item.title}</b><br>${item.address}<br>
+        <b>Prices:</b><br>${priceInfo}<br>
+        <a href="${item.url}" target="_blank">More info</a>`;
+      yhisteenusedLayer.add(createMarker(map, {lat,lng}, item.title, content));
 
-    // Get price info
-    const detail = detailMap.get(item.id.toString());
-    const priceInfo = detail ? formatYhisteenusedPrice(detail.prices) : "No prices";
-
-    const content = `<b>${item.title}</b><br>${item.address}<br>
-                     <b>Prices:</b><br>${priceInfo}<br>
-                     <a href="${item.url}" target="_blank">More info</a>`;
-    yhisteenusedLayer.add(createMarker(map, {lat,lng}, item.title, content));
-
-    // Polygons
-    item.areas?.forEach(area => {
-      const pathCoords = area.points.map(pt => ({lat:pt.lat,lng:pt.lng}));
-      yhisteenusedLayer.add(createPolygon(map, pathCoords, area.color_fill || "#004488"));
+      item.areas?.forEach(area => {
+        const pathCoords = area.points.map(pt => ({lat:pt.lat,lng:pt.lng}));
+        yhisteenusedLayer.add(createPolygon(map, pathCoords, area.color_fill || "#004488"));
+      });
     });
+    yhisteenusedLayer.enableClustering(map);
   });
 
   // === Layer toggles ===
@@ -186,9 +206,7 @@ async function initMap() {
 }
 </script>
 
-<!-- Google Maps API -->
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&callback=initMap">
-</script>
+<!-- Google Maps API with async/defer -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&v=weekly&callback=initMap"></script>
 </body>
 </html>
