@@ -20,7 +20,8 @@
 <body>
 <div id="layers-control">
   <label><input type="checkbox" id="europarkLayer" checked> EuroPark</label><br>
-  <label><input type="checkbox" id="snabbLayer" checked> Snabb</label>
+  <label><input type="checkbox" id="snabbLayer" checked> Snabb</label><br>
+  <label><input type="checkbox" id="yhisteenusedLayer" checked> Yhisteenused</label>
 </div>
 <div id="map"></div>
 
@@ -28,7 +29,9 @@
 const DATA_SOURCES = {
   europark: "https://mlp.ee/parking/europark.json",
   snabb: "https://mlp.ee/parking/snabb.json",
-  snabb_detail: "https://mlp.ee/parking/snabb_detail.json"
+  snabb_detail: "https://mlp.ee/parking/snabb_detail.json",
+  yhisteenused: "https://mlp.ee/parking/yhisteenused.json",
+  yhisteenused_detail: "https://mlp.ee/parking/yhisteenused_detail.json"
 };
 const CACHE_TTL = 24 * 60 * 60 * 1000;
 
@@ -41,7 +44,7 @@ class MapLayer {
   }
 }
 
-// -------------------- Caching fetch --------------------
+// -------------------- Cached fetch --------------------
 async function fetchCached(url, key) {
   const cached = localStorage.getItem(key);
   if (cached) {
@@ -80,6 +83,12 @@ function formatEuroparkPrice(price_list) {
   return price_list.map(p => `${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}`).join("<br>");
 }
 
+// -------------------- Yhisteenused price formatting --------------------
+function formatYhisteenusedPrice(prices) {
+  if (!prices) return "No prices";
+  return prices.map(p => `${p.duration}: ${p.price}`).join("<br>");
+}
+
 // -------------------- Init Map --------------------
 async function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
@@ -90,11 +99,11 @@ async function initMap() {
   // === Layers ===
   const euroLayer = new MapLayer("EuroPark");
   const snabbLayer = new MapLayer("Snabb");
+  const yhisteenusedLayer = new MapLayer("Yhisteenused");
 
   // --- EURO PARK ---
   const euroData = await fetchCached(DATA_SOURCES.europark, "europark_cache");
   euroData?.paringzones?.forEach(zone => {
-    // Marker at centerpoint
     const center = zone.geojson?.features?.find(f => f.properties?.type==="centerpoint");
     if (center) {
       const [lng, lat] = center.geometry.coordinates;
@@ -104,7 +113,6 @@ async function initMap() {
                        <b>Prices:</b><br>${formatEuroparkPrice(zone.price_list)}`;
       euroLayer.add(createMarker(map, {lat,lng}, zone.name, content));
     }
-    // Polygons
     zone.geojson?.features?.filter(f => f.properties?.type==="outline").forEach(f => {
       const coords = f.geometry.coordinates[0].map(c => ({lat:c[1], lng:c[0]}));
       euroLayer.add(createPolygon(map, coords, "#0000FF"));
@@ -126,27 +134,50 @@ async function initMap() {
     const lat = parseFloat(item.Latitude);
     const lng = parseFloat(item.Longitude);
     if (!lat || !lng) return;
-
     const content = `<b>${item.Name}</b><br>${item.AddressText}<br>
                      Zone: ${item.Zone}<br>
                      24h price: ${item.Price24h} ${item.Currency}<br>
                      Half-hour: ${item.HalfHourPrice} ${item.Currency}`;
     snabbLayer.add(createMarker(map, {lat,lng}, item.Name, content));
 
-    // Polygons
     item.Polygons?.forEach(poly => {
       const pathCoords = poly.path.map(pt => ({lat:pt.latitude,lng:pt.longitude}));
       snabbLayer.add(createPolygon(map, pathCoords, "#008800"));
     });
   });
 
+  // --- YHISTEENUSED ---
+  const yhisteenusedData = await fetchCached(DATA_SOURCES.yhisteenused, "yhisteenused_cache");
+  const yhisteenusedDetailData = await fetchCached(DATA_SOURCES.yhisteenused_detail, "yhisteenused_detail_cache");
+
+  const detailMap = new Map();
+  yhisteenusedDetailData?.forEach(d => detailMap.set(d.id.toString(), d));
+
+  yhisteenusedData?.items?.forEach(item => {
+    const lat = item.lat;
+    const lng = item.lng;
+    if (!lat || !lng) return;
+
+    // Get price info
+    const detail = detailMap.get(item.id.toString());
+    const priceInfo = detail ? formatYhisteenusedPrice(detail.prices) : "No prices";
+
+    const content = `<b>${item.title}</b><br>${item.address}<br>
+                     <b>Prices:</b><br>${priceInfo}<br>
+                     <a href="${item.url}" target="_blank">More info</a>`;
+    yhisteenusedLayer.add(createMarker(map, {lat,lng}, item.title, content));
+
+    // Polygons
+    item.areas?.forEach(area => {
+      const pathCoords = area.points.map(pt => ({lat:pt.lat,lng:pt.lng}));
+      yhisteenusedLayer.add(createPolygon(map, pathCoords, area.color_fill || "#004488"));
+    });
+  });
+
   // === Layer toggles ===
-  document.getElementById("europarkLayer").addEventListener("change", e => {
-    euroLayer.setVisible(map, e.target.checked);
-  });
-  document.getElementById("snabbLayer").addEventListener("change", e => {
-    snabbLayer.setVisible(map, e.target.checked);
-  });
+  document.getElementById("europarkLayer").addEventListener("change", e => euroLayer.setVisible(map, e.target.checked));
+  document.getElementById("snabbLayer").addEventListener("change", e => snabbLayer.setVisible(map, e.target.checked));
+  document.getElementById("yhisteenusedLayer").addEventListener("change", e => yhisteenusedLayer.setVisible(map, e.target.checked));
 }
 </script>
 
