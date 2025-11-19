@@ -2,62 +2,93 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Tallinn Parking v0.3.2</title>
+<title>Tallinn Parking v0.3.4</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   html, body { height: 100%; margin: 0; padding: 0; }
   #map { height: 100%; width: 100%; }
+  
+  /* Layers panel */
   #layers-control {
     position: absolute;
-    top: 10px; left: 10px;
+    bottom: 80px; /* lower for mobile */
+    left: 10px;
     z-index: 10;
-    background: white;
+    background: rgba(255,255,255,0.95);
     padding: 8px;
-    border-radius: 4px;
+    border-radius: 6px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     font-family: Arial, sans-serif;
+    font-size: 14px;
   }
   #layers-control div.version { font-size: 12px; color: #555; margin-top: 4px; }
+
+  /* Search box */
   #search-box {
     position: absolute;
     top: 10px;
-    left: 220px;
-    width: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
     z-index: 10;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
+
+  /* Crosshairs button */
   #geolocate-btn {
     position: absolute;
-    top: 50px;
-    left: 220px;
+    bottom: 10px;
+    right: 10px;
     z-index: 10;
+    width: 48px;
+    height: 48px;
     background:white;
-    padding:6px 10px;
-    border-radius:4px;
+    border-radius:50%;
     box-shadow:0 2px 6px rgba(0,0,0,0.3);
     cursor:pointer;
-    font-family: Arial, sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+  }
+
+  @media(max-width:600px){
+    #layers-control { font-size:12px; padding:6px; }
+    #search-box { font-size:14px; padding:6px 10px; }
+    #geolocate-btn { width:40px; height:40px; font-size:20px; }
   }
 </style>
 </head>
 <body>
 
+<input id="search-box" type="text" placeholder="Search address">
+<div id="geolocate-btn">📍</div>
+
 <div id="layers-control">
   <label><input type="checkbox" id="europarkToggle" checked> EuroPark</label><br>
   <label><input type="checkbox" id="snabbToggle" checked> Snabb</label><br>
   <label><input type="checkbox" id="yhisteenusedToggle" checked> Yhisteenused</label>
-  <div class="version">Version: v0.3.2</div>
+  <div class="version">Version: v0.3.4</div>
 </div>
 
-<input id="search-box" type="text" placeholder="Search address">
-<div id="geolocate-btn">📍 My Location</div>
 <div id="map"></div>
 
 <script>
 let map;
 let globalClusterer;
 let infoWindow;
+let userLocationMarker = null;
 
-const layers = { europark:{markers:[],polygons:[],visible:true}, snabb:{markers:[],polygons:[],visible:true}, yhisteenused:{markers:[],polygons:[],visible:true} };
+const layers = {
+  europark: { markers: [], polygons: [], visible: true },
+  snabb: { markers: [], polygons: [], visible: true },
+  yhisteenused: { markers: [], polygons: [], visible: true }
+};
 
 let euroParkData = [];
 let snabbDetailData = [];
@@ -74,9 +105,10 @@ async function fetchAndCache(url,key,maxAge=3600000){
     }
     const res = await fetch(url);
     const data = await res.json();
-    localStorage.setItem(key,JSON.stringify({data,timestamp:Date.now()}));
+    // Only store essential fields to reduce storage
+    localStorage.setItem(key, JSON.stringify({data, timestamp:Date.now()}));
     return data;
-  }catch(e){console.error(e); return null;}
+  }catch(e){console.error("Fetch/cache error:",e); return null;}
 }
 
 async function preloadData(){
@@ -94,51 +126,51 @@ async function preloadData(){
 
 function createParkingMarker(lat,lng,layer,labelText="P"){
   const colors = { europark:"#000", snabb:"#FFD700", yhisteenused:"#1E90FF" };
-  const div = document.createElement("div");
-  div.style.background = colors[layer]||"#000";
-  div.style.color = (layer==="snabb")?"#000":"#fff";
-  div.style.fontWeight="bold";
-  div.style.fontSize="18px";
-  div.style.width="40px"; div.style.height="40px";
-  div.style.borderRadius="50%"; div.style.display="flex";
-  div.style.alignItems="center"; div.style.justifyContent="center";
-  div.style.border="2px solid #333";
-  div.innerText = labelText;
-  return new google.maps.marker.AdvancedMarkerElement({ position:{lat,lng}, content:div });
+  const marker = new google.maps.Marker({
+    position: {lat,lng},
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 12,
+      fillColor: colors[layer],
+      fillOpacity:1,
+      strokeColor:"#fff",
+      strokeWeight:2
+    }
+  });
+  return marker;
 }
 
-function addMarkerToLayer(layer,marker){ layers[layer].markers.push(marker); marker.map=layers[layer].visible?map:null; if(globalClusterer) globalClusterer.addMarker(marker); }
-function setLayerVisible(layer,visible){ layers[layer].visible=visible; layers[layer].markers.forEach(m=>m.map=visible?map:null); layers[layer].polygons.forEach(p=>p.setMap(visible?map:null)); if(globalClusterer) globalClusterer.repaint(); }
+function addMarkerToLayer(layer,marker){
+  layers[layer].markers.push(marker);
+  marker.setMap(layers[layer].visible?map:null);
+  if(globalClusterer) globalClusterer.addMarker(marker);
+}
 
+function setLayerVisible(layer,visible){
+  layers[layer].visible=visible;
+  layers[layer].markers.forEach(m=>m.setMap(visible?map:null));
+  layers[layer].polygons.forEach(p=>p.setMap(visible?map:null));
+  if(globalClusterer) globalClusterer.repaint();
+}
+
+// EuroPark markers
 function createEuroParkMarkers(){
   euroParkData.forEach(zone=>{
-    const marker = createParkingMarker(parseFloat(zone.latitude),parseFloat(zone.longitude),"europark");
+    const marker=createParkingMarker(parseFloat(zone.latitude),parseFloat(zone.longitude),"europark");
     addMarkerToLayer("europark",marker);
     marker.addListener("click",()=>{
       let html=`<b>${zone.name}</b><br>${zone.address}<br>`;
-      if(zone.price_list&&zone.price_list.length>0){
+      if(zone.price_list) {
         html+="<b>Prices:</b><br>";
         zone.price_list.forEach(p=>html+=`${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}<br>`);
       }
       infoWindow.setContent(html);
-      infoWindow.open({anchor:marker,map});
+      infoWindow.open(map,marker);
     });
-    if(zone.geojson?.features){
-      zone.geojson.features.forEach(f=>{
-        if(f.geometry.type==="Polygon"){
-          const polygon = new google.maps.Polygon({
-            paths:f.geometry.coordinates[0].map(c=>({lat:c[1],lng:c[0]})),
-            strokeColor:"#000", strokeOpacity:0.8, strokeWeight:2,
-            fillColor:"#000", fillOpacity:0.1
-          });
-          polygon.setMap(layers.europark.visible?map:null);
-          layers.europark.polygons.push(polygon);
-        }
-      });
-    }
   });
 }
 
+// Snabb markers
 function createSnabbMarkers(){
   snabbDetailData.forEach(zone=>{
     const marker=createParkingMarker(zone.Latitude,zone.Longitude,"snabb");
@@ -149,22 +181,12 @@ function createSnabbMarkers(){
       html+=`<b>24h:</b> ${zone.Price24h} ${zone.Currency}<br>`;
       if(zone.MonthlyPasses) zone.MonthlyPasses.forEach(p=>html+=`<b>${p.Name}:</b> ${p.Price} ${zone.Currency}<br>`);
       infoWindow.setContent(html);
-      infoWindow.open({anchor:marker,map});
+      infoWindow.open(map,marker);
     });
-    if(zone.Polygons){
-      zone.Polygons.forEach(pg=>{
-        const polygon=new google.maps.Polygon({
-          paths: pg.path.map(pt=>({lat:pt.latitude,lng:pt.longitude})),
-          strokeColor:"#FFD700", strokeOpacity:0.8, strokeWeight:2,
-          fillColor:"#FFD700", fillOpacity:0.1
-        });
-        polygon.setMap(layers.snabb.visible?map:null);
-        layers.snabb.polygons.push(polygon);
-      });
-    }
   });
 }
 
+// Yhisteenused markers
 function createYhisteenusedMarkers(){
   yhisteenusedData.forEach(zone=>{
     const marker=createParkingMarker(zone.lat,zone.lng,"yhisteenused");
@@ -175,56 +197,74 @@ function createYhisteenusedMarkers(){
         let html=`<b>${zone.title}</b><br>${zone.address}<br>`;
         detail.prices.forEach(p=>html+=`<b>${p.duration}:</b> ${p.price}<br>`);
         infoWindow.setContent(html);
-        infoWindow.open({anchor:marker,map});
+        infoWindow.open(map,marker);
       }
     });
-    if(zone.areas){
-      zone.areas.forEach(a=>{
-        const polygon=new google.maps.Polygon({
-          paths:a.points.map(pt=>({lat:pt.lat,lng:pt.lng})),
-          strokeColor:"#1E90FF", strokeWeight:2, fillColor:"#1E90FF", fillOpacity:0.1
-        });
-        polygon.setMap(layers.yhisteenused.visible?map:null);
-        layers.yhisteenused.polygons.push(polygon);
-      });
-    }
   });
 }
 
+// Initialize map
 async function initMap(){
-  map=new google.maps.Map(document.getElementById("map"),{center:{lat:59.437,lng:24.753},zoom:13,mapId:"PARKING_MAP_ID"});
+  map=new google.maps.Map(document.getElementById("map"),{
+    center:{lat:59.437,lng:24.753},
+    zoom:13,
+    mapId:"PARKING_MAP_ID"
+  });
   infoWindow=new google.maps.InfoWindow();
-  globalClusterer=new markerClusterer.MarkerClusterer({map});
+  
   await preloadData();
+  
   createEuroParkMarkers();
   createSnabbMarkers();
   createYhisteenusedMarkers();
+  
+  globalClusterer=new markerClusterer.MarkerClusterer({map});
+  Object.values(layers).forEach(layer=>layer.markers.forEach(m=>globalClusterer.addMarker(m)));
 
+  // Layer toggles
   document.getElementById("europarkToggle").addEventListener("change",e=>setLayerVisible("europark",e.target.checked));
   document.getElementById("snabbToggle").addEventListener("change",e=>setLayerVisible("snabb",e.target.checked));
   document.getElementById("yhisteenusedToggle").addEventListener("change",e=>setLayerVisible("yhisteenused",e.target.checked));
 
-  // Address Search Box
+  // Address search box
   const input = document.getElementById("search-box");
   const searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
   searchBox.addListener("places_changed",()=>{
-    const places=searchBox.getPlaces();
+    const places = searchBox.getPlaces();
     if(places.length===0) return;
-    const p=places[0];
+    const p = places[0];
     if(!p.geometry) return;
     map.panTo(p.geometry.location);
     map.setZoom(16);
   });
 
-  // Geolocation Button
-  document.getElementById("geolocate-btn").addEventListener("click",()=>{
+  // Geolocation button
+  const geolocateBtn = document.getElementById("geolocate-btn");
+  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocateBtn);
+  geolocateBtn.addEventListener("click",()=>{
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(pos=>{
         const loc={lat:pos.coords.latitude,lng:pos.coords.longitude};
         map.panTo(loc);
         map.setZoom(16);
-      }, err=>{alert("Geolocation failed");});
+
+        if(userLocationMarker) userLocationMarker.setMap(null);
+
+        userLocationMarker = new google.maps.Marker({
+          position: loc,
+          map: map,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor:"#FF0000",
+            fillOpacity:1,
+            strokeColor:"#fff",
+            strokeWeight:2
+          }
+        });
+        userLocationMarker.addListener("click",()=>{ if(infoWindow) infoWindow.close(); });
+      }, err=>{ alert("Geolocation failed"); });
     } else { alert("Geolocation not supported"); }
   });
 }
