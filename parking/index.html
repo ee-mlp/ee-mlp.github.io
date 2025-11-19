@@ -2,279 +2,251 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Tallinn Parking v0.3.5</title>
+<title>Tallinn Parking Nearby v0.3.1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-html, body { height: 100%; margin: 0; padding: 0; }
-#map { height: 100%; width: 100%; }
-
-/* Layers panel */
-#layers-control {
-  position: absolute;
-  bottom: 80px;
-  left: 10px;
-  z-index: 10;
-  background: rgba(255,255,255,0.95);
-  padding: 8px;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-}
-#layers-control div.version { font-size: 12px; color: #555; margin-top: 4px; }
-
-/* Search box */
-#search-box {
-  width: 90%;
-  max-width: 400px;
-  z-index: 10;
-  font-size: 16px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-/* Crosshairs button */
-#geolocate-btn {
-  position: absolute;
-  bottom: 10px;
-  right: 12%; /* shifted 2% to right */
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  background:white;
-  border-radius:50%;
-  box-shadow:0 2px 6px rgba(0,0,0,0.3);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
-}
-
-@media(max-width:600px){
-  #layers-control { font-size:12px; padding:6px; }
-  #search-box { font-size:14px; padding:6px 10px; }
-  #geolocate-btn { width:40px; height:40px; font-size:20px; }
-}
+html, body { height: 100%; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+#map { height: 50%; width: 100%; }
+#search-container { padding: 10px; text-align: center; }
+#search-box { width: 90%; max-width: 400px; padding: 8px; font-size: 16px; border-radius: 4px; border: 1px solid #ccc; }
+#table-container { height: 50%; overflow-y: auto; padding: 10px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 6px; border-bottom: 1px solid #ccc; text-align: left; }
+th { background: #f0f0f0; }
+tr:hover { background-color: #eef; cursor: pointer; }
+a { text-decoration: none; color: inherit; }
 </style>
 </head>
 <body>
 
-<input id="search-box" type="text" placeholder="Search address">
-<div id="geolocate-btn">📍</div>
-
-<div id="layers-control">
-  <label><input type="checkbox" id="europarkToggle" checked> EuroPark</label><br>
-  <label><input type="checkbox" id="snabbToggle" checked> Snabb</label><br>
-  <label><input type="checkbox" id="yhisteenusedToggle" checked> Yhisteenused</label>
-  <div class="version">Version: v0.3.5</div>
+<div id="search-container">
+  <input id="search-box" type="text" placeholder="Search address...">
 </div>
 
 <div id="map"></div>
 
+<div id="table-container">
+  <table id="markers-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Distance (m)</th>
+        <th>Source</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
 <script>
 let map;
-let globalClusterer;
 let infoWindow;
-let userLocationMarker = null;
+let markersData = [];
+let userLocation = null;
+let markerObjects = [];
 
-const layers = {
-  europark: { markers: [], polygons: [], visible: true },
-  snabb: { markers: [], polygons: [], visible: true },
-  yhisteenused: { markers: [], polygons: [], visible: true }
-};
+// Preload data
+async function preloadData() {
+  const euro = await fetch("https://mlp.ee/parking/europark.json").then(r=>r.json()).catch(()=>({paringzones:[]}));
+  const euroParkData = euro.paringzones||[];
 
-let euroParkData = [];
-let snabbDetailData = [];
-let yhisteenusedData = [];
-let yhisteenusedDetailMap = new Map();
+  const snabb = await fetch("https://mlp.ee/parking/snabb_detail.json").then(r=>r.json()).catch(()=>[]);
 
-// Fetch & cache helper
-async function fetchAndCache(url,key,maxAge=3600000){
-  try{
-    const cached = localStorage.getItem(key);
-    if(cached){
-      const parsed = JSON.parse(cached);
-      if(Date.now()-parsed.timestamp<maxAge) return parsed.data;
-    }
-    const res = await fetch(url);
-    const data = await res.json();
-    localStorage.setItem(key, JSON.stringify({data, timestamp:Date.now()}));
-    return data;
-  }catch(e){console.error("Fetch/cache error:",e); return null;}
-}
+  const yh = await fetch("https://mlp.ee/parking/yhisteenused.json").then(r=>r.json()).catch(()=>({items:[]})).then(d=>d.items||[]);
+  const yhDetail = await fetch("https://mlp.ee/parking/yhisteenused_detail.json").then(r=>r.json()).catch(()=>[]);
 
-async function preloadData(){
-  const euro = await fetchAndCache("https://mlp.ee/parking/europark.json","cache_europark");
-  euroParkData = euro?.paringzones||[];
+  const yhDetailMap = new Map();
+  yhDetail.forEach(d=>yhDetailMap.set(String(d.id), d));
 
-  snabbDetailData = await fetchAndCache("https://mlp.ee/parking/snabb_detail.json","cache_snabb_detail")||[];
+  markersData = [];
 
-  const yh = await fetchAndCache("https://mlp.ee/parking/yhisteenused.json","cache_yhisteenused");
-  yhisteenusedData = yh?.items||[];
+  euroParkData.forEach(z=>{
+    markersData.push({
+      title: z.name,
+      price: z.price_list ? z.price_list.map(p=>`${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}`).join(", ") : "",
+      lat: parseFloat(z.latitude),
+      lng: parseFloat(z.longitude),
+      source: "EuroPark"
+    });
+  });
 
-  const yhDetail = await fetchAndCache("https://mlp.ee/parking/yhisteenused_detail.json","cache_yhisteenused_detail")||[];
-  yhDetail.forEach(d=>yhisteenusedDetailMap.set(String(d.id),d));
-}
+  snabb.forEach(z=>{
+    markersData.push({
+      title: z.Name,
+      price: `Iga alustatud 30 minutit: ${z.HalfHourPrice} ${z.Currency}, 24h: ${z.Price24h} ${z.Currency}`,
+      lat: z.Latitude,
+      lng: z.Longitude,
+      source: "Snabb"
+    });
+  });
 
-// Create SVG "P" marker
-function createParkingMarker(lat,lng,layer){
-  const colors = { europark:"#000", snabb:"#FFD700", yhisteenused:"#1E90FF" };
-
-  return new google.maps.Marker({
-    position: {lat,lng},
-    icon: {
-      url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-          <circle cx="20" cy="20" r="20" fill="${colors[layer]}" />
-          <text x="20" y="26" font-size="18" font-weight="bold" text-anchor="middle" fill="white">P</text>
-        </svg>
-      `),
-      scaledSize: new google.maps.Size(40,40),
-    }
+  yh.forEach(z=>{
+    const detail = yhDetailMap.get(String(z.id));
+    let priceText = "";
+    if(detail && detail.prices) priceText = detail.prices.map(p=>`${p.duration}: ${p.price}`).join(", ");
+    markersData.push({
+      title: z.title,
+      price: priceText,
+      lat: z.lat,
+      lng: z.lng,
+      source: "Yhisteenused"
+    });
   });
 }
 
-function addMarkerToLayer(layer,marker){
-  layers[layer].markers.push(marker);
-  marker.setMap(layers[layer].visible?map:null);
-  if(globalClusterer) globalClusterer.addMarker(marker);
+// Haversine distance
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371000;
+  const toRad = x => x*Math.PI/180;
+  const dLat = toRad(lat2-lat1);
+  const dLng = toRad(lng2-lng1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)**2;
+  const c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R*c;
 }
 
-function setLayerVisible(layer,visible){
-  layers[layer].visible=visible;
-  layers[layer].markers.forEach(m=>m.setMap(visible?map:null));
-  layers[layer].polygons.forEach(p=>p.setMap(visible?map:null));
-  if(globalClusterer) globalClusterer.repaint();
-}
+// Update table and map markers
+function updateNearby() {
+  if(!userLocation) return;
+  const tbody = document.querySelector("#markers-table tbody");
+  tbody.innerHTML = "";
 
-// EuroPark markers
-function createEuroParkMarkers(){
-  euroParkData.forEach(zone=>{
-    const marker=createParkingMarker(parseFloat(zone.latitude),parseFloat(zone.longitude),"europark");
-    addMarkerToLayer("europark",marker);
-    marker.addListener("click",()=>{
-      let html=`<b>${zone.name}</b><br>${zone.address}<br>`;
-      if(zone.price_list) {
-        html+="<b>Prices:</b><br>";
-        zone.price_list.forEach(p=>html+=`${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}<br>`);
+  // Clear previous markers
+  markerObjects.forEach(m=>m.setMap(null));
+  markerObjects = [];
+
+  markersData.forEach(m=>{
+    m.distance = haversine(userLocation.lat(), userLocation.lng(), m.lat, m.lng);
+  });
+
+  // Filter within 1000 m
+  const nearby = markersData.filter(m=>m.distance <= 1000).sort((a,b)=>a.distance-b.distance);
+
+  nearby.forEach((m,index)=>{
+    const tr = document.createElement("tr");
+
+    // Clickable title for Google Maps navigation
+    const titleCell = document.createElement("td");
+    const link = document.createElement("a");
+    link.textContent = m.title;
+    link.href = `https://www.google.com/maps/dir/?api=1&destination=${m.lat},${m.lng}`;
+    link.target = "_blank";
+    titleCell.appendChild(link);
+
+    const priceCell = document.createElement("td");
+    priceCell.textContent = m.price;
+
+    const distanceCell = document.createElement("td");
+    distanceCell.textContent = Math.round(m.distance);
+
+    const sourceCell = document.createElement("td");
+    sourceCell.textContent = m.source;
+
+    tr.appendChild(titleCell);
+    tr.appendChild(priceCell);
+    tr.appendChild(distanceCell);
+    tr.appendChild(sourceCell);
+
+    // Table row click: pan & info window
+    tr.addEventListener("click", ()=>{
+      map.panTo({lat: m.lat, lng: m.lng});
+      map.setZoom(17);
+      infoWindow.setContent(`<b>${m.title}</b><br>${m.price}<br><i>${m.source}</i>`);
+      infoWindow.setPosition({lat: m.lat, lng: m.lng});
+      infoWindow.open(map);
+    });
+
+    tbody.appendChild(tr);
+
+    // Add marker on map
+    const color = m.source === "EuroPark" ? "black" : m.source === "Snabb" ? "yellow" : "blue";
+    const marker = new google.maps.Marker({
+      position: {lat: m.lat, lng: m.lng},
+      map,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 10,
+        fillColor: color,
+        fillOpacity: 0.8,
+        strokeWeight: 1,
+        strokeColor: "white"
       }
-      infoWindow.setContent(html);
-      infoWindow.open(map,marker);
     });
-  });
-}
-
-// Snabb markers
-function createSnabbMarkers(){
-  snabbDetailData.forEach(zone=>{
-    const marker=createParkingMarker(zone.Latitude,zone.Longitude,"snabb");
-    addMarkerToLayer("snabb",marker);
-    marker.addListener("click",()=>{
-      let html=`<b>${zone.Name}</b><br>${zone.AddressText}<br>`;
-      html+=`<b>Half hour:</b> ${zone.HalfHourPrice} ${zone.Currency}<br>`;
-      html+=`<b>24h:</b> ${zone.Price24h} ${zone.Currency}<br>`;
-      if(zone.MonthlyPasses) zone.MonthlyPasses.forEach(p=>html+=`<b>${p.Name}:</b> ${p.Price} ${zone.Currency}<br>`);
-      infoWindow.setContent(html);
-      infoWindow.open(map,marker);
+    marker.addListener("click", ()=>{
+      infoWindow.setContent(`<b>${m.title}</b><br>${m.price}<br><i>${m.source}</i>`);
+      infoWindow.open(map, marker);
     });
-  });
-}
-
-// Yhisteenused markers
-function createYhisteenusedMarkers(){
-  yhisteenusedData.forEach(zone=>{
-    const marker=createParkingMarker(zone.lat,zone.lng,"yhisteenused");
-    addMarkerToLayer("yhisteenused",marker);
-    marker.addListener("click",()=>{
-      const detail=yhisteenusedDetailMap.get(String(zone.id));
-      if(detail){
-        let html=`<b>${zone.title}</b><br>${zone.address}<br>`;
-        detail.prices.forEach(p=>html+=`<b>${p.duration}:</b> ${p.price}<br>`);
-        infoWindow.setContent(html);
-        infoWindow.open(map,marker);
-      }
-    });
+    markerObjects.push(marker);
   });
 }
 
 // Initialize map
-async function initMap(){
-  map=new google.maps.Map(document.getElementById("map"),{
-    center:{lat:59.437,lng:24.753},
-    zoom:13,
-    mapId:"PARKING_MAP_ID"
-  });
-  infoWindow=new google.maps.InfoWindow();
-  
+async function initMap() {
   await preloadData();
-  
-  createEuroParkMarkers();
-  createSnabbMarkers();
-  createYhisteenusedMarkers();
-  
-  globalClusterer=new markerClusterer.MarkerClusterer({map});
-  Object.values(layers).forEach(layer=>layer.markers.forEach(m=>globalClusterer.addMarker(m)));
 
-  // Layer toggles
-  document.getElementById("europarkToggle").addEventListener("change",e=>setLayerVisible("europark",e.target.checked));
-  document.getElementById("snabbToggle").addEventListener("change",e=>setLayerVisible("snabb",e.target.checked));
-  document.getElementById("yhisteenusedToggle").addEventListener("change",e=>setLayerVisible("yhisteenused",e.target.checked));
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: {lat: 59.437, lng: 24.753},
+    zoom: 13
+  });
 
-  // Address search box
+  infoWindow = new google.maps.InfoWindow();
+
   const input = document.getElementById("search-box");
   const searchBox = new google.maps.places.SearchBox(input);
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-  searchBox.addListener("places_changed",()=>{
+
+  searchBox.addListener("places_changed", () => {
     const places = searchBox.getPlaces();
-    if(places.length===0) return;
+    if(!places || !places.length) return;
     const p = places[0];
     if(!p.geometry) return;
-    map.panTo(p.geometry.location);
+    userLocation = p.geometry.location;
+    map.panTo(userLocation);
     map.setZoom(16);
+    updateNearby();
   });
 
-  // Close infoWindow when clicking on the map
-  map.addListener("click", () => {
-    if (infoWindow) infoWindow.close();
-  });
+  // Default location via geolocation
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos=>{
+      userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      map.panTo(userLocation);
+      map.setZoom(16);
+      updateNearby();
 
-  // Geolocation button
-  const geolocateBtn = document.getElementById("geolocate-btn");
-  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(geolocateBtn);
-  geolocateBtn.addEventListener("click",()=>{
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(pos=>{
-        const loc={lat:pos.coords.latitude,lng:pos.coords.longitude};
-        map.panTo(loc);
-        map.setZoom(16);
+      // Show marker for user location
+      new google.maps.Marker({
+        position: userLocation,
+        map,
+        title: "You are here",
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 8,
+          fillColor: "red",
+          fillOpacity: 1,
+          strokeColor: "white",
+          strokeWeight: 2
+        }
+      });
+    }, ()=>{
+      userLocation = map.getCenter();
+      updateNearby();
+    });
+  } else {
+    userLocation = map.getCenter();
+    updateNearby();
+  }
 
-        if(userLocationMarker) userLocationMarker.setMap(null);
-
-        userLocationMarker = new google.maps.Marker({
-          position: loc,
-          map: map,
-          icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 10,
-            fillColor:"#FF0000",
-            fillOpacity:1,
-            strokeColor:"#fff",
-            strokeWeight:2
-          }
-        });
-        userLocationMarker.addListener("click",()=>{ if(infoWindow) infoWindow.close(); });
-      }, err=>{ alert("Geolocation failed"); });
-    } else { alert("Geolocation not supported"); }
+  map.addListener("click", e=>{
+    userLocation = e.latLng;
+    updateNearby();
   });
 }
 </script>
 
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 <script async
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&v=weekly&libraries=marker,places&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&v=weekly&libraries=places&callback=initMap">
 </script>
 </body>
 </html>
