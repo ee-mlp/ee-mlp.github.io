@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Tallinn Parking — Multi-layer Map</title>
+  <title>Tallinn Parking v0.2.4</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     html,body,#map { height:100%; margin:0; padding:0; }
@@ -44,6 +44,14 @@
   };
   const CACHE_TTL = 24 * 60 * 60 * 1000; // 24h cache in localStorage
   const MAP_ID = "PARKING_MAP_ID"; // provided
+
+  // layers store markers & polygons
+  const layers = {
+    europark: { markers: [], polygons: [], visible: true },
+    snabb: { markers: [], polygons: [], visible: true },
+    yhisteenused: { markers: [], polygons: [], visible: true }
+  };
+
 
   // ---------- Helpers ----------
   async function fetchCached(url, key) {
@@ -95,14 +103,6 @@
   // ---------- Map & Layers (global) ----------
   let map;
   let globalClusterer; // single clusterer for all markers
-  const infoWindow = new google.maps.InfoWindow(); // single shared InfoWindow
-
-  // layers store markers & polygons
-  const layers = {
-    europark: { markers: [], polygons: [], visible: true },
-    snabb: { markers: [], polygons: [], visible: true },
-    yhisteenused: { markers: [], polygons: [], visible: true }
-  };
 
   // Utility to add marker to global clusterer and layer
   function addMarkerToLayer(layerName, advancedMarker) {
@@ -155,6 +155,7 @@
       // note: do not set map here; we'll assign map via addMarkerToLayer
     });
 
+
     marker.addListener("click", () => {
       // open info window anchored to marker (modern API)
       infoWindow.setContent(infoHtml || "");
@@ -171,6 +172,8 @@
       zoom: 13,
       mapId: MAP_ID
     });
+
+    const infoWindow = new google.maps.InfoWindow(); // single shared InfoWindow
 
     // single clusterer for all markers. Use reasonable options.
     globalClusterer = new markerClusterer.MarkerClusterer({
