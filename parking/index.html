@@ -103,6 +103,7 @@
   // ---------- Map & Layers (global) ----------
   let map;
   let globalClusterer; // single clusterer for all markers
+  let infoWindow;
 
   // Utility to add marker to global clusterer and layer
   function addMarkerToLayer(layerName, advancedMarker) {
@@ -173,7 +174,7 @@
       mapId: MAP_ID
     });
 
-    const infoWindow = new google.maps.InfoWindow(); // single shared InfoWindow
+    infoWindow = new google.maps.InfoWindow(); // single shared InfoWindow
 
     // single clusterer for all markers. Use reasonable options.
     globalClusterer = new markerClusterer.MarkerClusterer({
