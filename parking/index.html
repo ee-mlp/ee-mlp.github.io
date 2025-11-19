@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Tallinn Parking Map v0.2.2</title>
+<title>Tallinn Parking Map v0.2.3</title>
 <style>
   #map { height: 100vh; width: 100%; }
   #layers-control {
@@ -125,7 +125,7 @@ function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 59.437, lng: 24.753 },
     zoom: 13,
-    mapId: undefined,
+    mapId: "PARKING_MAP_ID",
     gestureHandling: "greedy", // allows better mobile interaction
   });
 
