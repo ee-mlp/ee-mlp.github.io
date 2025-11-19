@@ -59,9 +59,14 @@ async function fetchCached(url, key) {
 
 // -------------------- Marker & Polygon helpers --------------------
 function createMarker(map, position, title, infoContent) {
-  const marker = new google.maps.Marker({ map, position, title });
+  const marker = new google.maps.marker.AdvancedMarkerElement({
+    map,
+    position,
+    title,
+    content: `<div style="background:white;padding:4px;border:1px solid #333;border-radius:4px;">${title}</div>`
+  });
   const infoWindow = new google.maps.InfoWindow({ content: infoContent });
-  marker.addListener("click", () => infoWindow.open(map, marker));
+  marker.addListener("click", () => infoWindow.open(map));
   return marker;
 }
 
