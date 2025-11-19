@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Tallinn Parking Nearby v0.3</title>
+<title>Tallinn Parking Nearby v0.3.1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 html, body { height: 100%; margin: 0; padding: 0; font-family: Arial, sans-serif; }
@@ -14,6 +14,7 @@ table { width: 100%; border-collapse: collapse; }
 th, td { padding: 6px; border-bottom: 1px solid #ccc; text-align: left; }
 th { background: #f0f0f0; }
 tr:hover { background-color: #eef; cursor: pointer; }
+a { text-decoration: none; color: inherit; }
 </style>
 </head>
 <body>
@@ -124,7 +125,30 @@ function updateNearby() {
 
   nearby.forEach((m,index)=>{
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${m.title}</td><td>${m.price}</td><td>${Math.round(m.distance)}</td><td>${m.source}</td>`;
+
+    // Clickable title for Google Maps navigation
+    const titleCell = document.createElement("td");
+    const link = document.createElement("a");
+    link.textContent = m.title;
+    link.href = `https://www.google.com/maps/dir/?api=1&destination=${m.lat},${m.lng}`;
+    link.target = "_blank";
+    titleCell.appendChild(link);
+
+    const priceCell = document.createElement("td");
+    priceCell.textContent = m.price;
+
+    const distanceCell = document.createElement("td");
+    distanceCell.textContent = Math.round(m.distance);
+
+    const sourceCell = document.createElement("td");
+    sourceCell.textContent = m.source;
+
+    tr.appendChild(titleCell);
+    tr.appendChild(priceCell);
+    tr.appendChild(distanceCell);
+    tr.appendChild(sourceCell);
+
+    // Table row click: pan & info window
     tr.addEventListener("click", ()=>{
       map.panTo({lat: m.lat, lng: m.lng});
       map.setZoom(17);
@@ -132,6 +156,7 @@ function updateNearby() {
       infoWindow.setPosition({lat: m.lat, lng: m.lng});
       infoWindow.open(map);
     });
+
     tbody.appendChild(tr);
 
     // Add marker on map
@@ -139,7 +164,6 @@ function updateNearby() {
     const marker = new google.maps.Marker({
       position: {lat: m.lat, lng: m.lng},
       map,
-      title: m.title,
       icon: {
         path: google.maps.SymbolPath.CIRCLE,
         scale: 10,
