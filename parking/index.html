@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Tallinn Parking v0.2.9</title>
+<title>Tallinn Parking v0.3.1</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   html, body { height: 100%; margin: 0; padding: 0; }
@@ -26,7 +26,7 @@
   <label><input type="checkbox" id="europarkToggle" checked> EuroPark</label><br>
   <label><input type="checkbox" id="snabbToggle" checked> Snabb</label><br>
   <label><input type="checkbox" id="yhisteenusedToggle" checked> Yhisteenused</label>
-  <div class="version">Version: v0.2.9</div>
+  <div class="version">Version: v0.3.1</div>
 </div>
 
 <div id="map"></div>
@@ -42,15 +42,54 @@ const layers = {
   yhisteenused: { markers: [], polygons: [], visible: true }
 };
 
-let yhisteenusedDetails = new Map(); // preloaded details
+// preloaded data
+let euroParkData = [];
+let snabbDetailData = [];
+let yhisteenusedData = [];
+let yhisteenusedDetailMap = new Map();
 
-// Create colored parking marker with P label
+// persistent cache fetch
+async function fetchAndCache(url, storageKey, maxAgeMs = 3600000) { // 1h default
+  try {
+    const cached = localStorage.getItem(storageKey);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Date.now() - parsed.timestamp < maxAgeMs) {
+        console.log(`Loaded ${storageKey} from cache`);
+        return parsed.data;
+      }
+    }
+    const res = await fetch(url);
+    const data = await res.json();
+    localStorage.setItem(storageKey, JSON.stringify({ data, timestamp: Date.now() }));
+    console.log(`Fetched ${storageKey} from network`);
+    return data;
+  } catch (e) {
+    console.error(`Failed to fetch ${storageKey}`, e);
+    return null;
+  }
+}
+
+// Preload all JSON data
+async function preloadData() {
+  const euro = await fetchAndCache("https://mlp.ee/parking/europark.json", "cache_europark");
+  euroParkData = euro?.paringzones || [];
+
+  snabbDetailData = await fetchAndCache("https://mlp.ee/parking/snabb_detail.json", "cache_snabb_detail") || [];
+
+  const yh = await fetchAndCache("https://mlp.ee/parking/yhisteenused.json", "cache_yhisteenused");
+  yhisteenusedData = yh?.items || [];
+
+  const yhDetail = await fetchAndCache("https://mlp.ee/parking/yhisteenused_detail.json", "cache_yhisteenused_detail") || [];
+  yhDetail.forEach(d => yhisteenusedDetailMap.set(String(d.id), d));
+}
+
+// Create colored AdvancedMarkerElement
 function createParkingMarker(lat, lng, layerName, labelText = "P") {
   const colorMap = { europark: "#000000", snabb: "#FFD700", yhisteenused: "#1E90FF" };
   const div = document.createElement("div");
   div.style.background = colorMap[layerName] || "#000";
-  div.style.color = "#fff";
-  if(layerName==="snabb") div.style.color="#000";
+  div.style.color = layerName==="snabb" ? "#000" : "#fff";
   div.style.fontWeight = "bold";
   div.style.fontSize = "18px";
   div.style.width = "40px";
@@ -81,8 +120,111 @@ function setLayerVisible(layerName, visible) {
   if(globalClusterer) globalClusterer.repaint();
 }
 
-// Initialize map
-function initMap() {
+function createEuroParkMarkers() {
+  euroParkData.forEach(zone => {
+    const marker = createParkingMarker(parseFloat(zone.latitude), parseFloat(zone.longitude), "europark");
+    addMarkerToLayer("europark", marker);
+
+    marker.addListener("click", () => {
+      let html = `<b>${zone.name}</b><br>${zone.address}<br>`;
+      if(zone.price_list && zone.price_list.length>0){
+        html += "<b>Prices:</b><br>";
+        zone.price_list.forEach(p => {
+          html += `${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}<br>`;
+        });
+      }
+      infoWindow.setContent(html);
+      infoWindow.open({ anchor: marker, map });
+    });
+
+    if(zone.geojson?.features){
+      zone.geojson.features.forEach(f=>{
+        if(f.geometry.type==="Polygon"){
+          const polygon = new google.maps.Polygon({
+            paths: f.geometry.coordinates[0].map(c=>({lat:c[1], lng:c[0]})),
+            strokeColor: "#000000",
+            strokeOpacity:0.8,
+            strokeWeight:2,
+            fillColor:"#000000",
+            fillOpacity:0.1
+          });
+          polygon.setMap(layers.europark.visible ? map : null);
+          layers.europark.polygons.push(polygon);
+        }
+      });
+    }
+  });
+}
+
+function createSnabbMarkers() {
+  snabbDetailData.forEach(zone=>{
+    const marker = createParkingMarker(zone.Latitude, zone.Longitude, "snabb");
+    addMarkerToLayer("snabb", marker);
+
+    marker.addListener("click", ()=>{
+      let html=`<b>${zone.Name}</b><br>${zone.AddressText}<br>`;
+      html += `<b>Half hour:</b> ${zone.HalfHourPrice} ${zone.Currency}<br>`;
+      html += `<b>24h:</b> ${zone.Price24h} ${zone.Currency}<br>`;
+      if(zone.MonthlyPasses){
+        zone.MonthlyPasses.forEach(p=>{
+          html += `<b>${p.Name}:</b> ${p.Price} ${zone.Currency}<br>`;
+        });
+      }
+      infoWindow.setContent(html);
+      infoWindow.open({ anchor: marker, map });
+    });
+
+    if(zone.Polygons){
+      zone.Polygons.forEach(pg=>{
+        const polygon = new google.maps.Polygon({
+          paths: pg.path.map(pt=>({lat:pt.latitude,lng:pt.longitude})),
+          strokeColor: "#FFD700",
+          strokeOpacity:0.8,
+          strokeWeight:2,
+          fillColor:"#FFD700",
+          fillOpacity:0.1
+        });
+        polygon.setMap(layers.snabb.visible ? map : null);
+        layers.snabb.polygons.push(polygon);
+      });
+    }
+  });
+}
+
+function createYhisteenusedMarkers() {
+  yhisteenusedData.forEach(zone=>{
+    const marker = createParkingMarker(zone.lat, zone.lng, "yhisteenused");
+    addMarkerToLayer("yhisteenused", marker);
+
+    marker.addListener("click", ()=>{
+      const detail = yhisteenusedDetailMap.get(String(zone.id));
+      if(detail){
+        let html=`<b>${zone.title}</b><br>${zone.address}<br>`;
+        detail.prices.forEach(p=>{
+          html += `<b>${p.duration}:</b> ${p.price}<br>`;
+        });
+        infoWindow.setContent(html);
+        infoWindow.open({ anchor: marker, map });
+      }
+    });
+
+    if(zone.areas){
+      zone.areas.forEach(a=>{
+        const polygon = new google.maps.Polygon({
+          paths: a.points.map(pt=>({lat:pt.lat,lng:pt.lng})),
+          strokeColor: "#1E90FF",
+          strokeWeight:2,
+          fillColor:"#1E90FF",
+          fillOpacity:0.1
+        });
+        polygon.setMap(layers.yhisteenused.visible ? map : null);
+        layers.yhisteenused.polygons.push(polygon);
+      });
+    }
+  });
+}
+
+async function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 59.437, lng: 24.753 },
     zoom: 13,
@@ -90,147 +232,20 @@ function initMap() {
   });
 
   infoWindow = new google.maps.InfoWindow();
-
-  // Clusterer
   globalClusterer = new markerClusterer.MarkerClusterer({ map });
 
-  loadEuroPark();
-  loadSnabb();
-  loadYhisteenused();
+  await preloadData();
+
+  createEuroParkMarkers();
+  createSnabbMarkers();
+  createYhisteenusedMarkers();
 
   document.getElementById("europarkToggle").addEventListener("change", e => setLayerVisible("europark", e.target.checked));
   document.getElementById("snabbToggle").addEventListener("change", e => setLayerVisible("snabb", e.target.checked));
   document.getElementById("yhisteenusedToggle").addEventListener("change", e => setLayerVisible("yhisteenused", e.target.checked));
 }
-
-// Load EuroPark
-async function loadEuroPark() {
-  try {
-    const res = await fetch("https://mlp.ee/parking/europark.json");
-    const data = await res.json();
-    data.paringzones.forEach(zone => {
-      const marker = createParkingMarker(parseFloat(zone.latitude), parseFloat(zone.longitude), "europark");
-      addMarkerToLayer("europark", marker);
-
-      marker.addListener("click", () => {
-        let html = `<b>${zone.name}</b><br>${zone.address}<br>`;
-        if(zone.price_list && zone.price_list.length>0){
-          html += "<b>Prices:</b><br>";
-          zone.price_list.forEach(p => {
-            html += `${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}<br>`;
-          });
-        }
-        infoWindow.setContent(html);
-        infoWindow.open({ anchor: marker, map });
-      });
-
-      // Polygons
-      if(zone.geojson?.features){
-        zone.geojson.features.forEach(f=>{
-          if(f.geometry.type==="Polygon"){
-            const polygon = new google.maps.Polygon({
-              paths: f.geometry.coordinates[0].map(c=>({lat:c[1], lng:c[0]})),
-              strokeColor: "#000000",
-              strokeOpacity:0.8,
-              strokeWeight:2,
-              fillColor:"#000000",
-              fillOpacity:0.1
-            });
-            polygon.setMap(layers.europark.visible ? map : null);
-            layers.europark.polygons.push(polygon);
-          }
-        });
-      }
-    });
-  } catch(e){ console.error("Failed to load EuroPark", e); }
-}
-
-// Load Snabb (detail only)
-async function loadSnabb(){
-  try{
-    const res = await fetch("https://mlp.ee/parking/snabb_detail.json");
-    const data = await res.json();
-    data.forEach(zone=>{
-      const marker = createParkingMarker(zone.Latitude, zone.Longitude, "snabb");
-      addMarkerToLayer("snabb", marker);
-
-      marker.addListener("click", ()=>{
-        let html=`<b>${zone.Name}</b><br>${zone.AddressText}<br>`;
-        html += `<b>Half hour:</b> ${zone.HalfHourPrice} ${zone.Currency}<br>`;
-        html += `<b>24h:</b> ${zone.Price24h} ${zone.Currency}<br>`;
-        if(zone.MonthlyPasses){
-          zone.MonthlyPasses.forEach(p=>{
-            html += `<b>${p.Name}:</b> ${p.Price} ${zone.Currency}<br>`;
-          });
-        }
-        infoWindow.setContent(html);
-        infoWindow.open({ anchor: marker, map });
-      });
-
-      // Polygons
-      if(zone.Polygons){
-        zone.Polygons.forEach(pg=>{
-          const polygon = new google.maps.Polygon({
-            paths: pg.path.map(pt=>({lat:pt.latitude,lng:pt.longitude})),
-            strokeColor: "#FFD700",
-            strokeOpacity:0.8,
-            strokeWeight:2,
-            fillColor:"#FFD700",
-            fillOpacity:0.1
-          });
-          polygon.setMap(layers.snabb.visible ? map : null);
-          layers.snabb.polygons.push(polygon);
-        });
-      }
-    });
-  }catch(e){ console.error("Failed to load Snabb", e);}
-}
-
-// Load Yhisteenused (preload detail)
-async function loadYhisteenused(){
-  try{
-    const resDetail = await fetch("https://mlp.ee/parking/yhisteenused_detail.json");
-    const detailData = await resDetail.json();
-    detailData.forEach(d=>yhisteenusedDetails.set(String(d.id), d));
-
-    const res = await fetch("https://mlp.ee/parking/yhisteenused.json");
-    const data = await res.json();
-    data.items.forEach(zone=>{
-      const marker = createParkingMarker(zone.lat, zone.lng, "yhisteenused");
-      addMarkerToLayer("yhisteenused", marker);
-
-      marker.addListener("click", ()=>{
-        const detail = yhisteenusedDetails.get(String(zone.id));
-        if(detail){
-          let html=`<b>${zone.title}</b><br>${zone.address}<br>`;
-          detail.prices.forEach(p=>{
-            html += `<b>${p.duration}:</b> ${p.price}<br>`;
-          });
-          infoWindow.setContent(html);
-          infoWindow.open({ anchor: marker, map });
-        }
-      });
-
-      // Polygons
-      if(zone.areas){
-        zone.areas.forEach(a=>{
-          const polygon = new google.maps.Polygon({
-            paths: a.points.map(pt=>({lat:pt.lat,lng:pt.lng})),
-            strokeColor: "#1E90FF",
-            strokeWeight:2,
-            fillColor:"#1E90FF",
-            fillOpacity:0.1
-          });
-          polygon.setMap(layers.yhisteenused.visible ? map : null);
-          layers.yhisteenused.polygons.push(polygon);
-        });
-      }
-    });
-  }catch(e){ console.error("Failed to load Yhisteenused", e);}
-}
 </script>
 
-<!-- MarkerClusterer must load before Google Maps init -->
 <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 <script async
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&v=weekly&libraries=marker&callback=initMap">
