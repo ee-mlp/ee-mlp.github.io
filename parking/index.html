@@ -2,90 +2,156 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tallinn EuroPark Map</title>
+  <title>Tallinn Parking Map</title>
   <style>
     #map {
       height: 100vh;
       width: 100%;
     }
+    #layers-control {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: white;
+      padding: 10px;
+      z-index: 5;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
   </style>
 </head>
 <body>
+  <div id="layers-control">
+    <label><input type="checkbox" id="europarkLayer" checked> EuroPark</label><br>
+    <label><input type="checkbox" id="snabbLayer" checked> Snabb</label>
+  </div>
   <div id="map"></div>
 
   <script>
-    const DATA_URL = "https://mlp.ee/parking/europark.json";
-    const CACHE_KEY = "europark_cache";
-    const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+    const DATA_SOURCES = {
+      europark: "https://mlp.ee/parking/europark.json",
+      snabb: "https://mlp.ee/parking/snabb.json",
+      snabb_detail: "https://mlp.ee/parking/snabb_detail.json"
+    };
+    const CACHE_TTL = 24 * 60 * 60 * 1000;
 
-    async function loadParkingData() {
-      // Check cache
-      const cached = localStorage.getItem(CACHE_KEY);
+    async function fetchCached(url, key) {
+      const cached = localStorage.getItem(key);
       if (cached) {
         const parsed = JSON.parse(cached);
         if (Date.now() - parsed.timestamp < CACHE_TTL) {
-          console.log("Loaded EuroPark data from cache");
+          console.log(`Loaded ${key} from cache`);
           return parsed.data;
         }
       }
-
-      // Fetch from network
-      const response = await fetch(DATA_URL);
-      const data = await response.json();
-
-      // Cache it
-      localStorage.setItem(CACHE_KEY, JSON.stringify({
-        timestamp: Date.now(),
-        data: data
-      }));
-
-      console.log("Fetched EuroPark data from network");
+      const resp = await fetch(url);
+      const data = await resp.json();
+      localStorage.setItem(key, JSON.stringify({ timestamp: Date.now(), data }));
+      console.log(`Fetched ${key} from network`);
       return data;
     }
 
-    function formatPriceSummary(price_list) {
-      if (!price_list || price_list.length === 0) return "No prices";
-      return price_list.map(p => `${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}`).join("<br>");
+    function createMarker(map, position, title, infoContent) {
+      const marker = new google.maps.Marker({ map, position, title });
+      const infoWindow = new google.maps.InfoWindow({ content: infoContent });
+      marker.addListener("click", () => infoWindow.open(map, marker));
+      return marker;
     }
 
-    function initMap() {
+    function createPolygon(map, pathCoords, color="#FF0000") {
+      return new google.maps.Polygon({
+        paths: pathCoords,
+        strokeColor: color,
+        strokeOpacity: 0.6,
+        strokeWeight: 2,
+        fillColor: color,
+        fillOpacity: 0.25,
+        map
+      });
+    }
+
+    function toggleVisibility(layerItems, visible) {
+      layerItems.forEach(item => {
+        if (item.setMap) item.setMap(visible ? item.map : null);
+      });
+    }
+
+    async function initMap() {
       const map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 59.437, lng: 24.753 },
         zoom: 13
       });
 
-      loadParkingData().then(data => {
-        if (!data || !data.paringzones) return;
+      // === EURO PARK ===
+      const euroData = await fetchCached(DATA_SOURCES.europark, "europark_cache");
+      const euroMarkers = [];
 
-        data.paringzones.forEach(zone => {
+      if (euroData?.paringzones) {
+        euroData.paringzones.forEach(zone => {
           const lat = parseFloat(zone.latitude);
           const lng = parseFloat(zone.longitude);
-
           if (!lat || !lng) return;
 
-          const marker = new google.maps.Marker({
-            position: { lat, lng },
-            map: map,
-            title: zone.name
-          });
-
-          const infoWindow = new google.maps.InfoWindow({
-            content: `
-              <b>${zone.name}</b><br>
-              ${zone.address}<br>
-              Available spaces: ${zone.available_spaces}<br>
-              <a href="${zone.url}" target="_blank">More info</a><br>
-              <b>Prices:</b><br>${formatPriceSummary(zone.price_list)}
-            `
-          });
-
-          marker.addListener("click", () => infoWindow.open(map, marker));
+          const content = `<b>${zone.name}</b><br>${zone.address}<br>Available: ${zone.available_spaces}<br>
+                           <a href="${zone.url}" target="_blank">More info</a>`;
+          const marker = createMarker(map, {lat,lng}, zone.name, content);
+          euroMarkers.push(marker);
         });
+      }
+
+      // === SNABB ===
+      const snabbData = await fetchCached(DATA_SOURCES.snabb, "snabb_cache");
+      const snabbDetailData = await fetchCached(DATA_SOURCES.snabb_detail, "snabb_detail_cache");
+      const snabbMarkers = [];
+      const snabbPolygons = [];
+
+      // Simple markers from snabb.json
+      snabbData?.forEach(item => {
+        const lat = parseFloat(item.Latitude);
+        const lng = parseFloat(item.Longitude);
+        if (!lat || !lng) return;
+        const content = `<b>${item.Name}</b><br>${item.AddressText}<br>Zone: ${item.Zone}`;
+        const marker = createMarker(map, {lat,lng}, item.Name, content);
+        snabbMarkers.push(marker);
+      });
+
+      // Polygons & detailed markers from snabb_detail.json
+      snabbDetailData?.forEach(item => {
+        const lat = parseFloat(item.Latitude);
+        const lng = parseFloat(item.Longitude);
+        if (!lat || !lng) return;
+
+        const content = `<b>${item.Name}</b><br>${item.AddressText}<br>
+                         Zone: ${item.Zone}<br>
+                         24h price: ${item.Price24h} ${item.Currency}<br>
+                         Half-hour: ${item.HalfHourPrice} ${item.Currency}`;
+
+        // Marker at center
+        const marker = createMarker(map, {lat,lng}, item.Name, content);
+        snabbMarkers.push(marker);
+
+        // Polygons
+        if (item.Polygons) {
+          item.Polygons.forEach(polygon => {
+            const pathCoords = polygon.path.map(pt => ({ lat: pt.latitude, lng: pt.longitude }));
+            const poly = createPolygon(map, pathCoords, "#008800");
+            snabbPolygons.push(poly);
+          });
+        }
+      });
+
+      // Layer toggle controls
+      document.getElementById("europarkLayer").addEventListener("change", e => {
+        toggleVisibility(euroMarkers, e.target.checked);
+      });
+      document.getElementById("snabbLayer").addEventListener("change", e => {
+        toggleVisibility(snabbMarkers, e.target.checked);
+        toggleVisibility(snabbPolygons, e.target.checked);
       });
     }
   </script>
 
-  <!-- Replace YOUR_API_KEY with your Google Maps API key -->
+  <!-- Google Maps API -->
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&callback=initMap">
   </script>
