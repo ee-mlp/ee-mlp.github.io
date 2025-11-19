@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Tallinn Parking Map</title>
+<title>Tallinn Parking Map v0.1</title>
 <style>
   #map { height: 100vh; width: 100%; }
   #layers-control {
@@ -81,7 +81,7 @@ function createMarker(map, position, title, infoContent) {
     map,
     position,
     title,
-    content: `<div style="background:white;padding:4px;border:1px solid #333;border-radius:4px;">📍 ${title}</div>`
+    content: `<div style="background:white;padding:4px;border:1px solid #333;border-radius:4px;">${title}</div>`
   });
   const infoWindow = new google.maps.InfoWindow({ content: infoContent });
   marker.addListener("click", () => infoWindow.open(map));
