@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tallinn Parking Map</title>
+  <title>Tallinn EuroPark Map</title>
   <style>
-    /* Full-screen map */
     #map {
       height: 100vh;
       width: 100%;
@@ -24,9 +23,8 @@
       const cached = localStorage.getItem(CACHE_KEY);
       if (cached) {
         const parsed = JSON.parse(cached);
-        const age = Date.now() - parsed.timestamp;
-        if (age < CACHE_TTL) {
-          console.log("Loaded parking data from cache");
+        if (Date.now() - parsed.timestamp < CACHE_TTL) {
+          console.log("Loaded EuroPark data from cache");
           return parsed.data;
         }
       }
@@ -41,8 +39,13 @@
         data: data
       }));
 
-      console.log("Fetched parking data from network");
+      console.log("Fetched EuroPark data from network");
       return data;
+    }
+
+    function formatPriceSummary(price_list) {
+      if (!price_list || price_list.length === 0) return "No prices";
+      return price_list.map(p => `${p.period_name_long}: ${p.amount_w_vat/100} ${p.currency}`).join("<br>");
     }
 
     function initMap() {
@@ -52,16 +55,28 @@
       });
 
       loadParkingData().then(data => {
-        if (!data || !data.parking) return;
-        data.parking.forEach(item => {
+        if (!data || !data.paringzones) return;
+
+        data.paringzones.forEach(zone => {
+          const lat = parseFloat(zone.latitude);
+          const lng = parseFloat(zone.longitude);
+
+          if (!lat || !lng) return;
+
           const marker = new google.maps.Marker({
-            position: { lat: item.Latitude, lng: item.Longitude },
+            position: { lat, lng },
             map: map,
-            title: item.Name
+            title: zone.name
           });
 
           const infoWindow = new google.maps.InfoWindow({
-            content: `<b>${item.Name}</b><br>${item.AddressText}<br>Zone: ${item.Zone}`
+            content: `
+              <b>${zone.name}</b><br>
+              ${zone.address}<br>
+              Available spaces: ${zone.available_spaces}<br>
+              <a href="${zone.url}" target="_blank">More info</a><br>
+              <b>Prices:</b><br>${formatPriceSummary(zone.price_list)}
+            `
           });
 
           marker.addListener("click", () => infoWindow.open(map, marker));
@@ -70,6 +85,7 @@
     }
   </script>
 
+  <!-- Replace YOUR_API_KEY with your Google Maps API key -->
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&callback=initMap">
   </script>
