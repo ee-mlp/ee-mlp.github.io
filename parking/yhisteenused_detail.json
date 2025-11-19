@@ -1,0 +1,3786 @@
+[
+  {
+    "id": "1230",
+    "name": "Tatari 47 tsoon P20",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1288",
+    "name": "Aia 3, Narva-Jõesuu tsoon P75",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.25 €"
+      }
+    ]
+  },
+  {
+    "id": "1322",
+    "name": "Pärnu mnt 43a tsoon YT14",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "12 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.20 €"
+      }
+    ]
+  },
+  {
+    "id": "1267",
+    "name": "Õpetaja 9a, Tartu tsoon P55",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7833",
+    "name": "Fahle kvartal tsoon F2",
+    "prices": [
+      {
+        "duration": "1 kalendripäev",
+        "price": "2.5 €"
+      }
+    ]
+  },
+  {
+    "id": "4970",
+    "name": "Heki tee 14 tsoon YT22",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1271",
+    "name": "F. Tuglase 14, Tartu tsoon P59",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "9211",
+    "name": "Mustamäe Keskus tsoon YT44",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "1226",
+    "name": "Luha 17a tsoon P18",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "9929",
+    "name": "Riia 15b, Tartu tsoon YT111",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      }
+    ]
+  },
+  {
+    "id": "7223",
+    "name": "Kiili 9 Tallinn tsoon YT31",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.5 €"
+      }
+    ]
+  },
+  {
+    "id": "8569",
+    "name": "Marsi 10 tsoon YT47",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1318",
+    "name": "Akadeemia tee 78 tsoon YT1",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.30 €"
+      }
+    ]
+  },
+  {
+    "id": "4663",
+    "name": "Akadeemia tee 3, 5, 5a, 7a, 7/1, 7/2, 11, 11/1, 11/2, Raja tn 4d. ja Siidisaba 7 tsoon YT18",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1174",
+    "name": "Pärnu linn, rand (tsoon RAND)",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "4.00 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "12.00 €"
+      }
+    ]
+  },
+  {
+    "id": "8197",
+    "name": "J. V. Jannseni 2a, Pärnu tsoon YT142",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      }
+    ]
+  },
+  {
+    "id": "4730",
+    "name": "Rabaküla 3a ja T1 tsoon YT19",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "25 €"
+      }
+    ]
+  },
+  {
+    "id": "9899",
+    "name": "Järvevana tee 9 tsoon YT164",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "8363",
+    "name": "Aleksander Puškini 14, Narva tsoon YT89",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "8 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "125 €"
+      }
+    ]
+  },
+  {
+    "id": "6691",
+    "name": "Fahle kvartal tsoon F4",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "Iga alustatud 60 minutit",
+        "price": "1.00 €"
+      }
+    ]
+  },
+  {
+    "id": "7983",
+    "name": "Logi tn 2 // 4 // Sadama tn 25 tsoon YT57",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6.5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.5 €"
+      }
+    ]
+  },
+  {
+    "id": "4993",
+    "name": "Linnamäe tee 17 tsoon YT23",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.6 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.30 €"
+      }
+    ]
+  },
+  {
+    "id": "7716",
+    "name": "Osmussaare tee 5 / Taevakivi tn 1 tsoon YT37",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.20 €"
+      }
+    ]
+  },
+  {
+    "id": "1292",
+    "name": "Rannamõisa tee 5b tsoon P79",
+    "prices": [
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      }
+    ]
+  },
+  {
+    "id": "7891",
+    "name": "Peterburi tee 38/5, 38/6, 38/9, 38/10, 38/12 ja 38/13 tsoon YT40",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.5 €"
+      }
+    ]
+  },
+  {
+    "id": "7254",
+    "name": "Kadaka tee 90 Tallinn tsoon YT34",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "25 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.40 €"
+      }
+    ]
+  },
+  {
+    "id": "1251",
+    "name": "Rannamäe tee 5 tsoon P4",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "16 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "120 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2 €"
+      }
+    ]
+  },
+  {
+    "id": "1314",
+    "name": "Põhja-Eesti Regionaalhaigla tsoon PERH",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "Iga alustatud 20 minutit",
+        "price": "0.50 €"
+      },
+      {
+        "duration": "12 tundi",
+        "price": "5 €"
+      }
+    ]
+  },
+  {
+    "id": "7690",
+    "name": "Viru pst 35, Sillamäe tsoon YT85",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "150 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "6243",
+    "name": "Tartu tn 15a, Viljandi tsoon YT82",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 60 minutit",
+        "price": "3 €"
+      }
+    ]
+  },
+  {
+    "id": "5253",
+    "name": "Mustamäe tee 44 tsoon YT25",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1247",
+    "name": "Süda tn 1 tsoon P36",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "5.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "24 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2.75 €"
+      }
+    ]
+  },
+  {
+    "id": "1302",
+    "name": "Kadaka tee 72a tsoon P89",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "20 €"
+      },
+      {
+        "duration": "8 tundi parkimist",
+        "price": "2.00 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.20 €"
+      }
+    ]
+  },
+  {
+    "id": "1303",
+    "name": "Suur-Ameerika 14 tsoon P9",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "75 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.25 €"
+      }
+    ]
+  },
+  {
+    "id": "7404",
+    "name": "Küti tee 4 Peetri tsoon YT36",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1207",
+    "name": "Nurga 1a, Maardu tsoon YT11",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "21 €"
+      }
+    ]
+  },
+  {
+    "id": "5244",
+    "name": "Türi tn 10a tsoon YT24",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.40 €"
+      }
+    ]
+  },
+  {
+    "id": "8533",
+    "name": "Valukoja 24 tsoon TLL2",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.80 €"
+      }
+    ]
+  },
+  {
+    "id": "1250",
+    "name": "Siduri 7 Tallinn tsoon P39",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "30 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7691",
+    "name": "Viru pst 35, Sillamäe tsoon YT86",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "150 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "6014",
+    "name": "Tähesaju tee 9 ja 11 tsoon YT28",
+    "prices": [
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.7 €"
+      }
+    ]
+  },
+  {
+    "id": "2391",
+    "name": "Kaarli pst. 4a, Tallinn tsoon P12 Parkla on suletud alates 01.09.2022",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "Iga alustatud 15 min",
+        "price": "0.62 €"
+      }
+    ]
+  },
+  {
+    "id": "1293",
+    "name": "Randvere tee 9b tsoon P8",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.90 €"
+      }
+    ]
+  },
+  {
+    "id": "1285",
+    "name": "Narva mnt. 2, Tartu tsoon P71",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "8 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "1 aasta",
+        "price": "360 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "7994",
+    "name": "Uus-Sadama 24 tsoon YT55",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "9877",
+    "name": "Uus-Tatari tn 25 tsoon YT161",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "7721",
+    "name": "Veski 42, Tartu tsoon P58",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7263",
+    "name": "Rehe põik 4 Tallinn tsoon YT35",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "25 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.40 €"
+      }
+    ]
+  },
+  {
+    "id": "7633",
+    "name": "Ravi tee 1 / Randvere tee 11 Viimsi tsoon P12",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "9338",
+    "name": "J. V. Jannseni tn 2a, Pärnu, tsoon YT142",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      }
+    ]
+  },
+  {
+    "id": "4662",
+    "name": "TalTech üliõpilasküla maa-alune parkla tsoon KYLA",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1319",
+    "name": "Pärnu mnt. 22 parkimismaja tsoon FINEST",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "24 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "174 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2 €"
+      }
+    ]
+  },
+  {
+    "id": "1227",
+    "name": "Admirali parkimismaja tsoon P19",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "130 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.20 €"
+      }
+    ]
+  },
+  {
+    "id": "1289",
+    "name": "Rahu põik 10/ Daumani 4b, Narva tsoon P76",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "25 €"
+      }
+    ]
+  },
+  {
+    "id": "1323",
+    "name": "Kiikri 4 tsoon YT2",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "45 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "1266",
+    "name": "Tehase 23, Tartu tsoon P54",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1231",
+    "name": "Lasnamäe tn 2 tsoon P21",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "65 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "6510",
+    "name": "Tiigi 67, Tartu tsoon YT77",
+    "prices": [
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "Iga alustatud 1h",
+        "price": "1.00 €"
+      }
+    ]
+  },
+  {
+    "id": "1390",
+    "name": "Vabaduse 32, Narva-Jõesuu tsoon YT81",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "30 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.25 €"
+      }
+    ]
+  },
+  {
+    "id": "7993",
+    "name": "Uus-Sadama19 tsoon YT56",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1328",
+    "name": "Peterburi tee 46 tsoon YT6",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.8 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.40 €"
+      }
+    ]
+  },
+  {
+    "id": "1282",
+    "name": "Narva mnt 4 tsoon P69",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "20 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "2 €"
+      }
+    ]
+  },
+  {
+    "id": "1294",
+    "name": "Madala 5a tsoon P80",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.00 €"
+      }
+    ]
+  },
+  {
+    "id": "1257",
+    "name": "Randvere tee 9 Haabneeme tsoon P45",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "9 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "270 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1312",
+    "name": "Vilmsi 15 tsoon P98",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "7 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "70 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.2 €"
+      }
+    ]
+  },
+  {
+    "id": "9372",
+    "name": "Rohuneeme tee 12 tsoon YT49",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "5081",
+    "name": "Veskiposti 2 tsoon AVALA",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "7 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1241",
+    "name": "Tulika 19 tsoon P30",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "1304",
+    "name": "Narva mnt. 50 tsoon P90",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1236",
+    "name": "Raadiku 10 tsoon P26 tõkkepuuta parkla",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.60 €"
+      }
+    ]
+  },
+  {
+    "id": "1324",
+    "name": "Lubja 5 tsoon YT3",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "12 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2 €"
+      }
+    ]
+  },
+  {
+    "id": "1261",
+    "name": "Stroomi kaubanduskeskus tsoon P49",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1298",
+    "name": "Adamsoni 34 tsoon P85",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "8 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "45 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1277",
+    "name": "Tulika 13/ Ülase 7-11 tsoon P64",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "7989",
+    "name": "Jahisadama parkla tsoon YT53",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "15 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.5 €"
+      }
+    ]
+  },
+  {
+    "id": "4219",
+    "name": "Keemikute 25, Maardu tsoon YT15",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      }
+    ]
+  },
+  {
+    "id": "1220",
+    "name": "Uus-Sadama 23 tsoon P11",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7874",
+    "name": "Võru 55f, Tartu tsoon YT110",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "30 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1172",
+    "name": "Pärnu linn 1 (tsoon PARNU)",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.00 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5.00 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50.00 €"
+      }
+    ]
+  },
+  {
+    "id": "8187",
+    "name": "Vabaduse 28b, Narva-Jõesuu tsoon YT88",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      }
+    ]
+  },
+  {
+    "id": "7858",
+    "name": "Randvere tee 17 Viimsi, tsoon YT39",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7233",
+    "name": "Juhkentali 11, Tallinn tsoon P29",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "8 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "90 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.20 €"
+      }
+    ]
+  },
+  {
+    "id": "7818",
+    "name": "Pärnu mnt 453f tsoon HES5",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1165",
+    "name": "Soo tn 1a tsoon P5",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "9386",
+    "name": "Niine 11 tsoon YT48",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "7727",
+    "name": "Maleva 2 tsoon YT38",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.40 €"
+      }
+    ]
+  },
+  {
+    "id": "1309",
+    "name": "Tulika põik 4 tsoon P95",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "4633",
+    "name": "Artelli 19 tsoon YT17",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7623",
+    "name": "Tartu mnt 53 tsoon P35",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.00 €"
+      }
+    ]
+  },
+  {
+    "id": "1173",
+    "name": "Pärnu linn 2 (tsoon PARNU)",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.00 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5.00 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50.00 €"
+      }
+    ]
+  },
+  {
+    "id": "9884",
+    "name": "Tondi 55 tsoon YT162",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1221",
+    "name": "Graniidi 2 tsoon P13",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "7822",
+    "name": "Ümera tn 37 tsoon HES3",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "8368",
+    "name": "Aleksander Puškini 28, Narva tsoon YT90",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      }
+    ]
+  },
+  {
+    "id": "1325",
+    "name": "Tuukri 1a tsoon YT4",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "7 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "84 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1260",
+    "name": "Priisle ja Ussimäe tee parkimisala tsoon P48",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "45 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "9892",
+    "name": "Pärnu mnt 67a tsoon YT165",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1237",
+    "name": "Vilmsi 64 tsoon P27",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "7 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.25 €"
+      }
+    ]
+  },
+  {
+    "id": "8431",
+    "name": "Logi tn 2//4//Sadama tn 25 tsoon YT61",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6.5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1240",
+    "name": "Tehnika 4 tsoon P3",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "8 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.30 €"
+      }
+    ]
+  },
+  {
+    "id": "1305",
+    "name": "Narva mnt. 90, Tallinn tsoon P91",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3.6 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.8 €"
+      }
+    ]
+  },
+  {
+    "id": "7814",
+    "name": "Pärnu mnt 141a tsoon HES4",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.20 €"
+      }
+    ]
+  },
+  {
+    "id": "9332",
+    "name": "Võru 57//57a, Tartu, YT113",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      }
+    ]
+  },
+  {
+    "id": "5307",
+    "name": "Linnamäe tee 95 tsoon YT26",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1256",
+    "name": "Magasini 31 tsoon P44",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.30 €"
+      }
+    ]
+  },
+  {
+    "id": "2929",
+    "name": "Mõisavahe 34b, Tartu tsoon YT72",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1313",
+    "name": "Mõisa tn 4, Jüri tsoon P99",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "20 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7044",
+    "name": "Raadiku 10 siseparkla",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      }
+    ]
+  },
+  {
+    "id": "1295",
+    "name": "Ravi tee 2, Viimsi tsoon P81",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "30 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1329",
+    "name": "Tondi 8a tsoon YT7",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.40 €"
+      }
+    ]
+  },
+  {
+    "id": "9349",
+    "name": "Emajõgi V6, Tartu tsoon SVLS",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "5 € /h"
+      }
+    ]
+  },
+  {
+    "id": "1306",
+    "name": "Heli 10 tsoon P92",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1243",
+    "name": "Maakri 26 tsoon P32",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "5.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "22 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "185 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2.8 €"
+      }
+    ]
+  },
+  {
+    "id": "4796",
+    "name": "Pärnu mnt 139d tsoon YT20",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.60 €"
+      }
+    ]
+  },
+  {
+    "id": "1310",
+    "name": "Mustamäe tee 60 tsoon P96",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "25 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1255",
+    "name": "Lilleoru tee 4 / Pärnamäe tee 4a tsoon P43",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1279",
+    "name": "Suur-Paala 2a tsoon P66",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "25 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.25 €"
+      }
+    ]
+  },
+  {
+    "id": "1296",
+    "name": "Põllu 3, Keila tsoon P82",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "20 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.30 €"
+      }
+    ]
+  },
+  {
+    "id": "7987",
+    "name": "A-terminali Kiss&Sail parkla tsoon YT60",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "15 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2 €"
+      }
+    ]
+  },
+  {
+    "id": "1280",
+    "name": "Tulika 9/11 tsoon P67",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "6816",
+    "name": "Üksnurme tee 8, Saku tsoon YT29",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.25 €"
+      }
+    ]
+  },
+  {
+    "id": "9825",
+    "name": "Lääneringtee 12, Tartu tsoon HES7",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      }
+    ]
+  },
+  {
+    "id": "1238",
+    "name": "Merivälja tee 33 tsoon P28",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1166",
+    "name": "Vabaduse väljaku parkimismaja",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "4.40 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "2.20 €"
+      },
+      {
+        "duration": "Öö parkimine, 21.00-9.00, 1h/1€",
+        "price": "5.00 €"
+      }
+    ]
+  },
+  {
+    "id": "7724",
+    "name": "Posti 6, Viljandi tsoon YT51",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1218",
+    "name": "ITKH Magdaleena haigla tsoon P10",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "15 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "8193",
+    "name": "Tallinna 41, Viljandi tsoon YT141",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      }
+    ]
+  },
+  {
+    "id": "1259",
+    "name": "Suur-Ameerika 33 tsoon P47",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "7 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "55 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.2 €"
+      }
+    ]
+  },
+  {
+    "id": "7460",
+    "name": "Kase 61 Tallinn tsoon SKA1",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.5 € /h"
+      },
+      {
+        "duration": "Iga alustatud 60 min",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1222",
+    "name": "Katusepapi tn 4 tsoon P14",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1275",
+    "name": "Anni 16 tsoon P62",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "25 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1330",
+    "name": "Nurga 3 Maardu tsoon YT8",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "35 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1263",
+    "name": "Lai 30, Tartu tsoon P51",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "15 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "100 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1326",
+    "name": "Endla 15 tsoon YT5",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "6 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "3 €"
+      }
+    ]
+  },
+  {
+    "id": "1234",
+    "name": "Mere pst. 4 tsoon P24",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "5 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1235",
+    "name": "Merivälja tee 22 tsoon P25",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1274",
+    "name": "Virbi 12 tsoon P61",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.40 €"
+      }
+    ]
+  },
+  {
+    "id": "1331",
+    "name": "Peterburi tee 48 tsoon YT9",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "30 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.40 €"
+      }
+    ]
+  },
+  {
+    "id": "2663",
+    "name": "Veerenni tn 20 tsoon P38",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "7.4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "66 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.3 €"
+      }
+    ]
+  },
+  {
+    "id": "9869",
+    "name": "Kadaka tee 5 tsoon YT163",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1258",
+    "name": "Telliskivi 61 tsoon P46",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "45 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.70 €"
+      }
+    ]
+  },
+  {
+    "id": "8184",
+    "name": "Kaare 33, Jõhvi tsoon YT87",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      }
+    ]
+  },
+  {
+    "id": "1219",
+    "name": "Viru keskuse parkimismaja tsoon VIRU",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "25 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "192 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.5 €"
+      },
+      {
+        "duration": "Ööparkimine 21:00 – 09:00, iga alustatud 60 minutit/1€ mobiiliga tasumisel",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1239",
+    "name": "Telliskivi 61b tsoon P29 – Parkla sulgemine 25.01.2022",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7990",
+    "name": "D-terminali Kiss&Sail parkla tsoon YT52",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "15 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2 €"
+      }
+    ]
+  },
+  {
+    "id": "1278",
+    "name": "Videviku 6 tsoon P65",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "5684",
+    "name": "Mahtra 46 tsoon YT27",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "29 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.5 €"
+      }
+    ]
+  },
+  {
+    "id": "1297",
+    "name": "Tatari 56/58 tsoon P83",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "66 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "1311",
+    "name": "Lastekodu 48 tsoon P97",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.2 €"
+      }
+    ]
+  },
+  {
+    "id": "1254",
+    "name": "Maardu Tervisekeskus tsoon P42",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7904",
+    "name": "Logi tn 3 tsoon YT61",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6.5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.5 €"
+      }
+    ]
+  },
+  {
+    "id": "9330",
+    "name": "Tuleviku 6, Narva, tsoon P77",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      }
+    ]
+  },
+  {
+    "id": "8464",
+    "name": "Viljandi mnt 164, Luige tsoon HES11",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "5981",
+    "name": "Nõmme tervisekeskus, Pärnu mnt 321",
+    "prices": [
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2.50 €"
+      },
+      {
+        "duration": "24 tundi",
+        "price": "25 €"
+      }
+    ]
+  },
+  {
+    "id": "1307",
+    "name": "Pirita tee 28b, Tallinn tsoon P93",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "1242",
+    "name": "Tondi 10/10a tsoon P31",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "35 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.75 €"
+      }
+    ]
+  },
+  {
+    "id": "4677",
+    "name": "Tartu linn, C piirkond",
+    "prices": [
+      {
+        "duration": "1 kuu",
+        "price": "15 €"
+      },
+      {
+        "duration": "3 kuud",
+        "price": "30 €"
+      },
+      {
+        "duration": "1 aasta",
+        "price": "100 €"
+      }
+    ]
+  },
+  {
+    "id": "9911",
+    "name": "Kaunase pst 21 tsoon YT114",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.5 € /h"
+      },
+      {
+        "duration": "Iga alustatud 60 min",
+        "price": "2.5 €"
+      }
+    ]
+  },
+  {
+    "id": "7558",
+    "name": "Karamelli tn 3 tsoon YT33",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "9478",
+    "name": "Põhja-Eesti Regionaalhaigla tsoon EMO",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "Iga alustatud 20 minutiti",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "2664",
+    "name": "Masina 7 tsoon YT10",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "72 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "4476",
+    "name": "Pärnu mnt 139d/1 tsoon YT16",
+    "prices": [
+      {
+        "duration": "1 kalendripäev",
+        "price": "12 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "48 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.25 €"
+      }
+    ]
+  },
+  {
+    "id": "1224",
+    "name": "Veerenni 54 tsoon P16",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "1.6 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "34 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.30 €"
+      }
+    ]
+  },
+  {
+    "id": "3464",
+    "name": "Kaunase pst 81a, Tartu tsoon YT73",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "24 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1265",
+    "name": "Lai 7, Tartu tsoon P53",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "12 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "100 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.25 €"
+      }
+    ]
+  },
+  {
+    "id": "9340",
+    "name": "Niidu9, Pärnu, tsoon HES8",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      }
+    ]
+  },
+  {
+    "id": "1320",
+    "name": "Paadi 4 ja 6a tsoon YT12",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.90 €"
+      }
+    ]
+  },
+  {
+    "id": "1232",
+    "name": "Tartu mnt 75a tsoon P22",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.2 €"
+      }
+    ]
+  },
+  {
+    "id": "1300",
+    "name": "Kaluri tee 5 Viimsi tsoon P87",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "25 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "8434",
+    "name": "Tala tn 2 tsoon YT43",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.5 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.25 €"
+      }
+    ]
+  },
+  {
+    "id": "1245",
+    "name": "Keila Tervisekeskus tsoon P34",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "8530",
+    "name": "Lennu 44 Reola tsoon TAY1",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "7 €"
+      },
+      {
+        "duration": "Iga alustatud 60 min",
+        "price": "3 €"
+      }
+    ]
+  },
+  {
+    "id": "7915",
+    "name": "Logi 6 tsoon YT54",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "50 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1316",
+    "name": "Tartu linn, A piirkond",
+    "prices": [
+      {
+        "duration": "1 kuu",
+        "price": "120 €"
+      },
+      {
+        "duration": "3 kuud",
+        "price": "300 €"
+      },
+      {
+        "duration": "1 aasta",
+        "price": "1200 €"
+      }
+    ]
+  },
+  {
+    "id": "1253",
+    "name": "Lastekodu 48 tsoon P41",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.00 €"
+      }
+    ]
+  },
+  {
+    "id": "7190",
+    "name": "Suur-Paala tn 2 tsoon YT30",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.25 €"
+      }
+    ]
+  },
+  {
+    "id": "6693",
+    "name": "Fahle kvartal tsoon F1",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "6 € /h"
+      },
+      {
+        "duration": "Iga alustatud 60 minutit",
+        "price": "6 €"
+      }
+    ]
+  },
+  {
+    "id": "1269",
+    "name": "Väike-Tähe 20, Tartu tsoon P57",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1286",
+    "name": "Tallinna mnt. 13, Narva tsoon P73",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "30 €"
+      },
+      {
+        "duration": "Iga alustatud 15 minutit",
+        "price": "0.15 €"
+      }
+    ]
+  },
+  {
+    "id": "7240",
+    "name": "E. Vilde tee 71 Tallinn tsoon YT32",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "7187",
+    "name": "Põik 4, Tartu tsoon YT79",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1268",
+    "name": "Puiestee 107, Tartu tsoon P56",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "55 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1287",
+    "name": "A-A. Tiimanni 20, Narva tsoon P74",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "30 €"
+      },
+      {
+        "duration": "Iga alustatud 15 minutit",
+        "price": "0.15 €"
+      }
+    ]
+  },
+  {
+    "id": "1291",
+    "name": "Tartu mnt. 54 tsoon P78",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "10 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.00 €"
+      }
+    ]
+  },
+  {
+    "id": "2393",
+    "name": "Jänese 16a, Tartu tsoon YT71",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "30 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "8566",
+    "name": "P. Pinna 4 tsoon YT46",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "0.25 €"
+      }
+    ]
+  },
+  {
+    "id": "1317",
+    "name": "Tartu linn, B piirkond",
+    "prices": [
+      {
+        "duration": "1 kuu",
+        "price": "60 €"
+      },
+      {
+        "duration": "3 kuud",
+        "price": "150 €"
+      },
+      {
+        "duration": "1 aasta",
+        "price": "600 €"
+      }
+    ]
+  },
+  {
+    "id": "1252",
+    "name": "Pae 70/72/74 tsoon P40",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "7 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.9 €"
+      }
+    ]
+  },
+  {
+    "id": "9336",
+    "name": "Variku 8, Tartu, tsoon YT112",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "5 € /h"
+      }
+    ]
+  },
+  {
+    "id": "7810",
+    "name": "Paldiski mnt 98a tsoon HES1",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.8 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "7 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.4 €"
+      }
+    ]
+  },
+  {
+    "id": "1301",
+    "name": "Koidula 38 tsoon P88",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.60 €"
+      }
+    ]
+  },
+  {
+    "id": "4800",
+    "name": "Aiandi tee 23a Viimsi, tsoon YT21",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1.6 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "5 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.80 €"
+      }
+    ]
+  },
+  {
+    "id": "1244",
+    "name": "Mustamäe tee 55 ja 55a tsoon P33",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1233",
+    "name": "Ravi 18, Tallinn tsoon P23",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "15 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "1264",
+    "name": "Tiigi 61b, Tartu tsoon P52",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      }
+    ]
+  },
+  {
+    "id": "1321",
+    "name": "Toompea 8 tsoon YT13",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "15 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1272",
+    "name": "Kopli 3 tsoon P6",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.5 €"
+      }
+    ]
+  },
+  {
+    "id": "8546",
+    "name": "Sepise tn 6 tsoon TLL1",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "12 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "49 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "7826",
+    "name": "J. Smuuli tee 23 tsoon HES2",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "Iga alustatud 30 min",
+        "price": "1.2 €"
+      }
+    ]
+  },
+  {
+    "id": "9838",
+    "name": "Siidisaba 8 tsoon YT160",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "3 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1225",
+    "name": "Katusepapi 1 tsoon P17",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "2 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "6 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "53 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1 €"
+      }
+    ]
+  },
+  {
+    "id": "8585",
+    "name": "Osmussaare tn 8 tsoon YT41",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "0.4 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "2 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.20 €"
+      }
+    ]
+  },
+  {
+    "id": "5134",
+    "name": "Paldiski mnt 52 tsoon RH1",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "1 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "4.5 €"
+      },
+      {
+        "duration": "1 kuu",
+        "price": "40 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "0.50 €"
+      }
+    ]
+  },
+  {
+    "id": "1209",
+    "name": "Holstre-Nõmme krossirada",
+    "prices": [
+      {
+        "duration": "1 kalendripäev",
+        "price": "15 €"
+      },
+      {
+        "duration": "1 aasta",
+        "price": "150 €"
+      }
+    ]
+  },
+  {
+    "id": "1248",
+    "name": "Süda tn. 1 parkla 2 tsoon P37",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "4.5 € /h"
+      },
+      {
+        "duration": "1 kalendripäev",
+        "price": "22 €"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "2.25 €"
+      }
+    ]
+  },
+  {
+    "id": "8340",
+    "name": "Meistri 22 tsoon YT42",
+    "prices": [
+      {
+        "duration": "1 tund",
+        "price": "3 € /h"
+      },
+      {
+        "duration": "Iga alustatud 30 minutit",
+        "price": "1.5 €"
+      }
+    ]
+  }
+]
