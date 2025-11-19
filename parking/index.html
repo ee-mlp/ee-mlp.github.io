@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tallinn Parking Map</title>
+  <style>
+    /* Full-screen map */
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script>
+    const DATA_URL = "https://mlp.ee/parking/europark.json";
+    const CACHE_KEY = "europark_cache";
+    const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+
+    async function loadParkingData() {
+      // Check cache
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        const age = Date.now() - parsed.timestamp;
+        if (age < CACHE_TTL) {
+          console.log("Loaded parking data from cache");
+          return parsed.data;
+        }
+      }
+
+      // Fetch from network
+      const response = await fetch(DATA_URL);
+      const data = await response.json();
+
+      // Cache it
+      localStorage.setItem(CACHE_KEY, JSON.stringify({
+        timestamp: Date.now(),
+        data: data
+      }));
+
+      console.log("Fetched parking data from network");
+      return data;
+    }
+
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 59.437, lng: 24.753 },
+        zoom: 13
+      });
+
+      loadParkingData().then(data => {
+        if (!data || !data.parking) return;
+        data.parking.forEach(item => {
+          const marker = new google.maps.Marker({
+            position: { lat: item.Latitude, lng: item.Longitude },
+            map: map,
+            title: item.Name
+          });
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: `<b>${item.Name}</b><br>${item.AddressText}<br>Zone: ${item.Zone}`
+          });
+
+          marker.addListener("click", () => infoWindow.open(map, marker));
+        });
+      });
+    }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA84lYljBvy35HMNdP7_bV3eCBtUQ7ivn4&callback=initMap">
+  </script>
+</body>
+</html>
