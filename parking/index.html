@@ -92,7 +92,7 @@ async function preloadData() {
       price: priceText,
       lat: z.lat,
       lng: z.lng,
-      source: "Yhisteenused",
+      source: "Ühisteenused",
       polygons: z.areas ? z.areas.map(a=>({path:a.points.map(p=>({lat:p.lat,lng:p.lng}))})) : []
     });
   });
